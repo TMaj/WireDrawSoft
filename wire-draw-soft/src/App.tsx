@@ -3,7 +3,7 @@ import './App.css';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { IProcessState, IState } from './Containers/CommunicationProvider/CommunicationProvider.constans';
+import { IProcessState, IState } from './Common/Interfaces';
 import logo from './logo.svg';
 
 interface IAppProps {
