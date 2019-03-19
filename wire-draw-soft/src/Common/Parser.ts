@@ -34,11 +34,4 @@ export const parseToString  = (update: IProcessState) => {
     // tslint:disable-next-line:no-console
     console.log(xml);
     return xml;
-
-    // // tslint:disable-next-line:no-shadowed-variable
-    // return new Promise((resolve) => {
-    //     parseXml(message, (error: any, result: string) => {
-    //        resolve(result);
-    //     });
-    // });
 }

@@ -1,0 +1,15 @@
+.customSubmit {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 10px solid black;
+    border-radius: 6px;    
+    box-shadow: 1pt 1pt 1pt 1pt green;
+    background-color: lightblue;
+    cursor: pointer;
+}
+
+.customSubmit:hover {
+    background-color: lightgreen;
+}

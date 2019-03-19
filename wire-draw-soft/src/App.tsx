@@ -25,7 +25,7 @@ class App extends React.Component<IAppProps> {
 
 const mapStateToProps = (state: IState ) => {
   return {
-  currentState: state.currentState
+    currentState: state.currentState
   }
 }
 
