@@ -36,7 +36,15 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
 
         this.sendMessage = this.sendMessage.bind(this);
         this.handleStateInputChange = this.handleStateInputChange.bind(this);
-    }    
+        this.getInputLocalStorageKey = this.getInputLocalStorageKey.bind(this);
+    } 
+
+    public componentDidMount() {
+        const savedSpeedeInputValue = window.localStorage.getItem(this.getInputLocalStorageKey());
+        if (savedSpeedeInputValue) {
+            this.setState({speedInputValue: parseFloat(savedSpeedeInputValue)});
+        }
+    }
 
     public async sendMessage(event: React.FormEvent<HTMLFormElement>) {
         const update = Object.assign({}, this.props.currentState );
@@ -55,15 +63,20 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
                 <form onSubmit={this.sendMessage}>
                     <label>
                         Desired speed of engine {this.props.engineNumber}:
-                        <NumberInputComponent step={0.1} value={this.state.speedInputValue} onChange={this.handleStateInputChange} />                     
+                        <NumberInputComponent step={0.01} value={this.state.speedInputValue} onChange={this.handleStateInputChange} />                     
                     </label>
                     <CustomSubmitComponent value="Submit" />
                 </form>                  
             </div>);
     }
 
+    private getInputLocalStorageKey(): string {
+        return 'speed'+this.props.engineNumber +'InputValue';
+    }
+
     private handleStateInputChange(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ speedInputValue: parseFloat(event.currentTarget.value)});
+        window.localStorage.setItem(this.getInputLocalStorageKey(), event.currentTarget.value);
     }
 }
 

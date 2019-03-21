@@ -18,7 +18,7 @@ interface ITemperatureContainerState {
 
 class TemperatureContainer extends React.Component<ITemperatureContainerStoreProps, ITemperatureContainerState> {
     constructor(props: ITemperatureContainerStoreProps) {
-        super(props);
+        super(props);        
 
         this.state = {                      
             temperatureInputValue: 0,  
@@ -27,6 +27,13 @@ class TemperatureContainer extends React.Component<ITemperatureContainerStorePro
 
         this.sendMessage = this.sendMessage.bind(this);
         this.handleTemperatureInputChange = this.handleTemperatureInputChange.bind(this);
+    }
+
+    public componentDidMount() {
+        const savedTemperatureInputValue = window.localStorage.getItem('temperatureInputValue');
+        if (savedTemperatureInputValue) {
+            this.setState({temperatureInputValue: parseFloat(savedTemperatureInputValue)});
+        }
     }
 
     public async sendMessage(event: React.FormEvent<HTMLFormElement>) {
@@ -57,7 +64,7 @@ class TemperatureContainer extends React.Component<ITemperatureContainerStorePro
                 <form onSubmit={this.sendMessage}>
                     <label>
                         Desired temperature:
-                        <NumberInputComponent step={0.1} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange}/>                    
+                        <NumberInputComponent step={0.01} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={200} min ={0}/>                    
                     </label>
                         <CustomSubmitComponent value="Submit" />
                 </form>                        
@@ -68,6 +75,7 @@ class TemperatureContainer extends React.Component<ITemperatureContainerStorePro
 
     private handleTemperatureInputChange(event: React.FormEvent<HTMLInputElement>) {
         this.setState({ temperatureInputValue: parseFloat(event.currentTarget.value)});
+        window.localStorage.setItem('temperatureInputValue', event.currentTarget.value)
     }
 }
 
