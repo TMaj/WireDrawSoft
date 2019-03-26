@@ -3,7 +3,7 @@ import './CustomButtonComponent.css'
 
 export interface ICustomButtonProps {
     content: string;
-    onClick: () => void;
+    onClick: () => void | ((event: React.FormEvent<HTMLButtonElement>) => void);
 }
 
 export const CustomButtonComponent = (props: ICustomButtonProps) => {

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { SubmitUpdate, UpdateSpeedInputValue } from 'src/Common/Actions';
 import { IProcessState, IState } from 'src/Common/Interfaces';
-import { parseToString } from 'src/Common/Parser';
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
-import socket from 'src/WebSocket/WebSocket';
 import wheel from '../../wheel.png';
 import './EngineContainer.css'
 
@@ -16,11 +16,15 @@ interface IEngineContainerStoreProps {
     currentState: IProcessState;
 }
 
-type IEngineContainerProps = IEngineContainerOwnProps & IEngineContainerStoreProps
+interface IEngineContainerDispatchProps {
+    submitUpdate: (state: IProcessState) => void;
+    updateSpeedInput: (speed: number, engineNumber: number) => void;
+}
+
+type IEngineContainerProps = IEngineContainerOwnProps & IEngineContainerStoreProps & IEngineContainerDispatchProps
 
 interface IEngineContainerState {
     speed: number;
-    websocket: any;
     speedInputValue: number
 }
 
@@ -30,8 +34,7 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
 
         this.state = {                      
             speed: 0,
-            speedInputValue: 0,  
-            websocket: socket,
+            speedInputValue: 0
         };
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -42,15 +45,17 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
     public componentDidMount() {
         const savedSpeedeInputValue = window.localStorage.getItem(this.getInputLocalStorageKey());
         if (savedSpeedeInputValue) {
-            this.setState({speedInputValue: parseFloat(savedSpeedeInputValue)});
+            const floatValue = parseFloat(savedSpeedeInputValue);
+            this.props.updateSpeedInput(floatValue, this.props.engineNumber);
+            this.setState({speedInputValue: floatValue});
         }
     }
 
     public async sendMessage(event: React.FormEvent<HTMLFormElement>) {
         const update = Object.assign({}, this.props.currentState );
         update['speed'+this.props.engineNumber] = this.state.speedInputValue; 
-
-        this.state.websocket.send(parseToString(update));
+        
+        this.props.submitUpdate(update);
         event.preventDefault();
     }   
     
@@ -75,8 +80,10 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
     }
 
     private handleStateInputChange(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ speedInputValue: parseFloat(event.currentTarget.value)});
+        const newFoatValue = parseFloat(event.currentTarget.value);
+        this.setState({ speedInputValue: newFoatValue});
         window.localStorage.setItem(this.getInputLocalStorageKey(), event.currentTarget.value);
+        this.props.updateSpeedInput(newFoatValue, this.props.engineNumber);
     }
 }
 
@@ -86,4 +93,11 @@ const mapStateToProps = (state: IState) : IEngineContainerStoreProps => {
     }
 }
 
-export default connect<IEngineContainerStoreProps, {}, IEngineContainerOwnProps>(mapStateToProps)(EngineContainer)
+const mapDispatchToProps = (dispatch: Dispatch): IEngineContainerDispatchProps => {
+    return { 
+        submitUpdate: (update: IProcessState) => dispatch(SubmitUpdate(update)),
+        updateSpeedInput: (update: number, engineNumber: number) => dispatch(UpdateSpeedInputValue(update, engineNumber))
+    };
+}
+
+export default connect<IEngineContainerStoreProps, IEngineContainerDispatchProps, IEngineContainerOwnProps>(mapStateToProps, mapDispatchToProps)(EngineContainer)

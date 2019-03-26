@@ -1,13 +1,12 @@
-import { call, put, takeEvery } from '@redux-saga/core/effects';
+import { call, takeEvery } from '@redux-saga/core/effects';
 import { IProcessState } from 'src/Common/Interfaces';
 import { parseToString } from 'src/Common/Parser';
 import socket from 'src/WebSocket/WebSocket';
-import { ISubmitUpdateAction } from './UpdatesHandler.actions';
-import { ACTION_SUBMIT, ACTION_UPDATE } from './UpdatesHandler.constans';
+import { ISubmitUpdateAction } from './Actions';
+import { ACTION_SUBMIT } from './Constans';
 
 export function* submitUpdate(action: ISubmitUpdateAction) {
-    yield call(sendUpdate, action.payload)
-    yield put({ type: ACTION_UPDATE })
+    yield call(sendUpdate, action.payload);
 }
 
 async function sendUpdate(update: IProcessState) {

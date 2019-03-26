@@ -1,7 +1,7 @@
 import * as React from 'react';
 import ChartsContainer from 'src/Containers/ChartsContainer/ChartsContainer';
 import EngineContainer from 'src/Containers/EngineContainer/EngineContainer';
-import { SettingsContainer } from 'src/Containers/SettingsContainer/SettingsContainer';
+import SettingsContainer from 'src/Containers/SettingsContainer/SettingsContainer';
 import TemperatureContainer from 'src/Containers/TemperatureContainer/TemperatureContainer';
 import './DashboardComponent.css';
 

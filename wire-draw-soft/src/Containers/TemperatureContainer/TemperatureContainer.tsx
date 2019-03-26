@@ -1,28 +1,33 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Thermometer from 'react-thermometer-component'
+import { Dispatch } from 'redux';
+import { SubmitUpdate, UpdateTempInputValue } from 'src/Common/Actions';
 import { IProcessState, IState } from "src/Common/Interfaces";
-import { parseToString } from 'src/Common/Parser';
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
-import socket from 'src/WebSocket/WebSocket';
 
 interface ITemperatureContainerStoreProps {
-    currentState: IProcessState
+    currentState: IProcessState,
+}
+
+interface ITemperatureContainerDispatchProps {
+    submitUpdate: (state: IProcessState) => void;
+    updateTempInput: (temp: number) => void;
 }
 
 interface ITemperatureContainerState {
-    temperatureInputValue: number,
-    websocket: any;
+    temperatureInputValue: number
 }
 
-class TemperatureContainer extends React.Component<ITemperatureContainerStoreProps, ITemperatureContainerState> {
-    constructor(props: ITemperatureContainerStoreProps) {
+type ITemperatureContainerProps = ITemperatureContainerStoreProps & ITemperatureContainerDispatchProps;
+
+class TemperatureContainer extends React.Component<ITemperatureContainerProps, ITemperatureContainerState> {
+    constructor(props: ITemperatureContainerProps) {
         super(props);        
 
         this.state = {                      
-            temperatureInputValue: 0,  
-            websocket: socket,
+            temperatureInputValue: 0
         };
 
         this.sendMessage = this.sendMessage.bind(this);
@@ -32,7 +37,9 @@ class TemperatureContainer extends React.Component<ITemperatureContainerStorePro
     public componentDidMount() {
         const savedTemperatureInputValue = window.localStorage.getItem('temperatureInputValue');
         if (savedTemperatureInputValue) {
-            this.setState({temperatureInputValue: parseFloat(savedTemperatureInputValue)});
+            const floatValue = parseFloat(savedTemperatureInputValue);
+            this.setState({temperatureInputValue: floatValue});
+            this.props.updateTempInput(floatValue);
         }
     }
 
@@ -40,7 +47,7 @@ class TemperatureContainer extends React.Component<ITemperatureContainerStorePro
         const update = Object.assign({}, this.props.currentState );
         update.temperature =  this.state.temperatureInputValue; 
 
-        this.state.websocket.send(parseToString(update));
+        this.props.submitUpdate(update);
         event.preventDefault();
     }
 
@@ -74,8 +81,10 @@ class TemperatureContainer extends React.Component<ITemperatureContainerStorePro
     }
 
     private handleTemperatureInputChange(event: React.FormEvent<HTMLInputElement>) {
-        this.setState({ temperatureInputValue: parseFloat(event.currentTarget.value)});
+        const newFloatValue = parseFloat(event.currentTarget.value);
+        this.setState({ temperatureInputValue: newFloatValue });
         window.localStorage.setItem('temperatureInputValue', event.currentTarget.value)
+        this.props.updateTempInput(newFloatValue);
     }
 }
 
@@ -85,4 +94,11 @@ const mapStateToProps = (state: IState) : ITemperatureContainerStoreProps => {
     }
 }
 
-export default connect<ITemperatureContainerStoreProps>(mapStateToProps)(TemperatureContainer)
+const mapDispatchToProps = (dispatch: Dispatch): ITemperatureContainerDispatchProps => {
+    return { 
+        submitUpdate: (update: IProcessState) => dispatch(SubmitUpdate(update)),
+        updateTempInput: (update: number) => dispatch(UpdateTempInputValue(update))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TemperatureContainer)

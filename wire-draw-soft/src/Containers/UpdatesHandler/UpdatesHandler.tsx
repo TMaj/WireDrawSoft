@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import socket from '../../WebSocket/WebSocket'
 
+import { UpdateStore } from 'src/Common/Actions';
 import { IProcessState } from 'src/Common/Interfaces';
 import { parseFromString } from 'src/Common/Parser';
-import { UpdateStore } from './UpdatesHandler.actions';
 
 interface IUpdatesHandlerProps {
     updateStore: (newState: IProcessState) => void;
@@ -13,7 +13,6 @@ interface IUpdatesHandlerProps {
 
 interface IUpdatesHandlerState {
     websocket: any;
-    stateInputValue: string;
 }
 
 class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandlerState> {
@@ -21,7 +20,6 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
         super(props);
 
         this.state = { 
-            stateInputValue: '',
             websocket: socket
         };
 
@@ -30,6 +28,8 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
     
     public async handleMessage(message: any) {
         const update = await parseFromString(message.data) as IProcessState;
+        // tslint:disable-next-line:no-console
+        console.log(message);
         this.props.updateStore(update);
     }    
 
@@ -47,7 +47,6 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
     updateStore: (update: IProcessState) => dispatch(UpdateStore(update))
-
 })
 
 export default connect(
