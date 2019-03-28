@@ -2,10 +2,10 @@ import { call, takeEvery } from '@redux-saga/core/effects';
 import { IProcessState } from 'src/Common/Interfaces';
 import { parseToString } from 'src/Common/Parser';
 import socket from 'src/WebSocket/WebSocket';
-import { ISubmitUpdateAction } from './Actions';
+import { IStateUpdateAction } from './Actions';
 import { ACTION_SUBMIT } from './Constans';
 
-export function* submitUpdate(action: ISubmitUpdateAction) {
+export function* submitUpdate(action: IStateUpdateAction) {
     yield call(sendUpdate, action.payload);
 }
 

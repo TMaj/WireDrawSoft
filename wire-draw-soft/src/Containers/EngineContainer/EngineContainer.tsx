@@ -5,7 +5,7 @@ import { SubmitUpdate, UpdateSpeedInputValue } from 'src/Common/Actions';
 import { IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
-import wheel from '../../wheel.png';
+// import wheel from '../.././Resources/wheel.png';
 import './EngineContainer.css'
 
 interface IEngineContainerOwnProps {
@@ -63,7 +63,7 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
         const currentSpeed = this.props.currentState['speed'+this.props.engineNumber];
         return (         
             <div>
-                <img className="Engine-wheel" src={wheel} style = {{animation: 'Engine-wheel-spin infinite '+ currentSpeed +'s linear'}} />
+                <img className="Engine-wheel" src={'img/wheel.png'} style = {{animation: 'Engine-wheel-spin infinite '+ currentSpeed +'s linear'}} />
                 <div> Current speed:{currentSpeed} </div>                
                 <form onSubmit={this.sendMessage}>
                     <label>

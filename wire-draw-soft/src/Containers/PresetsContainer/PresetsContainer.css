@@ -1,0 +1,94 @@
+.presets {
+    padding: 5px;
+    position: relative;
+}
+
+.presets .buttons-panel {
+    display: flex;
+}
+
+.presets .buttons-panel * {
+    margin-right: 10px;
+}
+
+.presets .add-new-panel {
+    position: absolute;
+    z-index: 1;
+    width: auto;
+    left: 0px;
+    right: 0px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: stretch ;    
+    background-color: #c5c3c6;
+    outline: 1px solid #4c5c68;
+}
+
+.presets .add-new-panel * {
+    font-size: 14px;   
+    margin-right: 10px;
+    padding: 15px;
+}
+
+.preset-entries {
+    background-color: #e5e5e6;
+    height: 200px;
+    overflow: auto;
+}
+
+#new-preset-input {
+    width: 100%;
+    margin-left: 4px;
+}
+
+.preset-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    flex-direction: row;
+    color: #4c5c68;
+    cursor: pointer;
+    background-color: #c5c3c6;     
+    fill: #e5e5e6;
+}
+
+.preset-entry .preset-label{
+    width:100%;
+    padding-top: 10px;
+}
+
+.preset-entry * {
+   margin-bottom: 2px;
+   margin-top: 2px;
+   margin-left: 4px;
+   margin-right: 4px;
+}
+
+.preset-entry:hover  {
+    color: #46494c;
+    cursor: pointer;
+    background-color: #dcdcdd;    
+    fill: #46494c;
+}
+
+.preset-entry--selected {
+    background-color: #1985a1;
+    color: #dcdcdd;
+    fill: white;
+}
+
+.preset-entry--selected:hover {
+    background-color: #46494c;
+    color: white;
+    fill: white;
+}
+
+ #svg {
+    z-index: 2;
+}
+
+/* .svg:hover {
+    fill: #1985a1;
+} */ 

@@ -1,5 +1,5 @@
 import { IProcessState } from 'src/Common/Interfaces';
-import { ACTION_SUBMIT, ACTION_UPDATE, ACTION_UPDATE_INPUT_SPEED_1, ACTION_UPDATE_INPUT_SPEED_2, ACTION_UPDATE_INPUT_TEMP } from "./Constans";
+import { ACTION_SUBMIT, ACTION_UPDATE, ACTION_UPDATE_INPUT_SPEED_1, ACTION_UPDATE_INPUT_SPEED_2, ACTION_UPDATE_INPUT_TEMP, ACTION_UPDATE_PRESET_STATE } from "./Constans";
 
 export interface IAction {
     type: string,
@@ -18,16 +18,23 @@ export  const UpdateStore = (stateUpdate: IProcessState): IUpdateStoreAction => 
     } as IUpdateStoreAction;
 }
 
-export interface ISubmitUpdateAction {
+export interface IStateUpdateAction {
     type: string;
     payload: IProcessState
 }
 
-export  const SubmitUpdate = (stateUpdate: IProcessState): ISubmitUpdateAction => {
+export  const SubmitUpdate = (stateUpdate: IProcessState): IStateUpdateAction => {
     return { 
         payload: stateUpdate,
         type: ACTION_SUBMIT,
-    } as ISubmitUpdateAction;
+    } as IStateUpdateAction;
+}
+
+export  const UpdatePresetState = (stateUpdate: IProcessState): IStateUpdateAction => {
+    return { 
+        payload: stateUpdate,
+        type: ACTION_UPDATE_PRESET_STATE,
+    } as IStateUpdateAction;
 }
 
 export interface IInputUpdateAction {

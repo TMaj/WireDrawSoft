@@ -1,15 +1,15 @@
-.customSubmit {
+.customInput {
     font-family: 'youngregular';
-    font-size: 20px;
-    width: 30%;
+    font-size: 14px;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    background-color: #c5c3c6;
-    cursor: pointer;
+    background-color: #dcdcdd;    
+    outline: 1px solid #c5c3c6;
 }
 
-.customSubmit:hover {    
+.customInput:focus {
     background-color: #1985a1;
     outline: 2px solid #dcdcdd;
     color: white

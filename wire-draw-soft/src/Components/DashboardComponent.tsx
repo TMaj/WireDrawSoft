@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ChartsContainer from 'src/Containers/ChartsContainer/ChartsContainer';
 import EngineContainer from 'src/Containers/EngineContainer/EngineContainer';
+import PresetsContainer from 'src/Containers/PresetsContainer/PresetsContainer';
 import SettingsContainer from 'src/Containers/SettingsContainer/SettingsContainer';
 import TemperatureContainer from 'src/Containers/TemperatureContainer/TemperatureContainer';
 import './DashboardComponent.css';
@@ -18,7 +19,7 @@ export const DashboardComponent = () => {
                 <EngineContainer engineNumber={2}/>
             </div>          
              <div className="PresetsPanel">
-                eee
+                <PresetsContainer/>
             </div>
             <div className="ChartsPanel">
                <ChartsContainer/>

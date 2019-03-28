@@ -8,7 +8,7 @@ import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/Cust
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
 
 interface ITemperatureContainerStoreProps {
-    currentState: IProcessState,
+    currentState: IProcessState
 }
 
 interface ITemperatureContainerDispatchProps {
@@ -17,7 +17,8 @@ interface ITemperatureContainerDispatchProps {
 }
 
 interface ITemperatureContainerState {
-    temperatureInputValue: number
+    temperatureInputValue: number,
+    previousValue: number,
 }
 
 type ITemperatureContainerProps = ITemperatureContainerStoreProps & ITemperatureContainerDispatchProps;
@@ -26,8 +27,9 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
     constructor(props: ITemperatureContainerProps) {
         super(props);        
 
-        this.state = {                      
-            temperatureInputValue: 0
+        this.state = {           
+            previousValue: 0,            
+            temperatureInputValue: 0,
         };
 
         this.sendMessage = this.sendMessage.bind(this);

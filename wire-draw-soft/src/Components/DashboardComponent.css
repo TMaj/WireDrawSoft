@@ -19,45 +19,45 @@ html, body, .grid-container { height: 100%; margin: 0; }
 }
 
 .LeftEnginePanel { 
-  background-color: beige;
+  background-color: #e5e5e6;
   grid-area: LeftEnginePanel; 
-  border: 1px solid green; 
+  border: 1px solid #4c5c68; 
   padding: 10px 10px 10px 10px;
 }
 
 .RightEnginePanel { 
-  background-color: beige;
+  background-color: #e5e5e6;
   grid-area: RightEnginePanel;
-  border: 1px solid green; 
+  border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px; 
 }
 
 .ChartsPanel { 
   grid-area: ChartsPanel; 
-  border: 1px solid green; 
+  border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px;
 }
 
 .TemperaturePanel { 
   grid-area: TemperaturePanel; 
-  border: 1px solid green; 
+  border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px;
 }
 
 .MenuPanel { 
   grid-area: MenuPanel; 
-  border: 1px solid green; 
+  border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px;
 }
 
 .PresetsPanel { 
   grid-area: PresetsPanel; 
-  border: 1px solid green; 
+  border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px;
  }
 
  .VideoPanel { 
   grid-area: VideoPanel; 
-  border: 1px solid green; 
+  border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px;
  }

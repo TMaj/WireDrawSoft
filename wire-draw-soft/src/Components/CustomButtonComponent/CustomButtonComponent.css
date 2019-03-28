@@ -1,15 +1,25 @@
+@import '../../index.css';
+
 .customButton {
-    width: 80%;
-    padding: 12px 20px;
+    font-family: 'youngregular';
+    font-size: 20px;
+    padding: 12px 12px;
     margin: 8px 0;
     box-sizing: border-box;
-    border: 10px solid black;
-    border-radius: 6px;    
-    box-shadow: 1pt 1pt 1pt 1pt green;
-    background-color: lightblue;
+    background-color: #c5c3c6;
     cursor: pointer;
+
 }
 
 .customButton:hover {
-    background-color: lightgreen;
+    background-color: #1985a1;
+    outline: 2px solid #dcdcdd;
+    color: white
+}
+
+.customButton:disabled {
+    background-color: #dcdcdd;
+    outline: 2px solid #c5c3c6;
+    color:  #c5c3c6;
+    cursor: default;
 }

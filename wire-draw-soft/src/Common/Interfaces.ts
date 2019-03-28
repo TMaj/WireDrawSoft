@@ -6,5 +6,6 @@ export interface IProcessState {
 
 export interface IState {
     currentState: IProcessState,
-    inputsState: IProcessState,
+    inputsState: IProcessState, 
+    presetsState: IProcessState
 }

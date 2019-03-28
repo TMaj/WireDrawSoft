@@ -11,6 +11,6 @@ export interface INumberInputComponentProps {
 
 export const NumberInputComponent = (props: INumberInputComponentProps) => {
     return (
-        <input className="customInput" type="number" step={props.step} value={props.value} onChange={props.onChange} max={props.max} min={props.min}/>
+        <input className="customNumberInput" type="number" step={props.step} value={props.value} onChange={props.onChange} max={props.max} min={props.min}/>
     );
 }

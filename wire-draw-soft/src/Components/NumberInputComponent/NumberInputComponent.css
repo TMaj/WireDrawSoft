@@ -1,14 +1,16 @@
 
-.customInput {
+.customNumberInput {
+    font-family: 'youngregular';
+    font-size: 20px;
     width: 30%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
-    border: 1px solid #555;
-    border-radius: 6px;    
-    outline: none;
-    background-color: lightgreen;
+    background-color: #dcdcdd;
+    outline: 1px solid #c5c3c6;
 }
-.customInput:focus {
-    background-color: lightblue;
+
+.customNumberInput:focus {
+    background-color: #c5c3c6;    
+    outline: 2px solid #1985a1;   
 }
