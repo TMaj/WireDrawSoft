@@ -5,6 +5,7 @@ import { SubmitUpdate, UpdatePresetState } from 'src/Common/Actions';
 import { IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';
 import { CustomInputComponent } from 'src/Components/CustomInputComponent/CustomInputComponent';
+import { IconType } from 'src/Resources/SVG';
 import './PresetsContainer.css';
 import { PresetsPanel } from './PresetsPanel';
 
@@ -23,7 +24,8 @@ interface IProcessContainerState {
     selectedPresetIndex: number;
     addPresetButtonDisabled: boolean;
     addPresetFormVisible: boolean;
-    presetNameInputValue: string;
+    presetNameInputValue: string;    
+    editable: boolean;
 }
 
 export interface IPreset {
@@ -42,9 +44,10 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
         this.state = {            
             addPresetButtonDisabled: false,
             addPresetFormVisible: false,
+            editable: false,
             presetNameInputValue: '',
             presets: [],
-            selectedPresetIndex: -1,            
+            selectedPresetIndex: -1,           
         }
 
         this.onAddPresetButtonClick = this.onAddPresetButtonClick.bind(this);
@@ -52,6 +55,7 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
         this.onSubmitPresetButtonClick = this.onSubmitPresetButtonClick.bind(this);
         this.onEntrySelected = this.onEntrySelected.bind(this);
         this.onEntryRemoved = this.onEntryRemoved.bind(this);
+        this.onEditButtonClicked = this.onEditButtonClicked.bind(this);
     }  
 
     public render() {
@@ -60,10 +64,16 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
                 <div className='buttons-panel'>
                      <CustomButtonComponent disabled={this.state.addPresetButtonDisabled} content="Add preset" onClick ={this.onAddPresetButtonClick}/>
                      <CustomButtonComponent content="Submit preset" onClick ={this.onSubmitPresetButtonClick}/> 
-                     <CustomButtonComponent />
+                     <CustomButtonComponent id={'edit-button'} icon={IconType.Edit} onClick={this.onEditButtonClicked}/>
                 </div>
                 {this.renderAddPresetForm()}
-                <PresetsPanel presets={this.state.presets} onSelectEntry={this.onEntrySelected} onRemoveEntry={this.onEntryRemoved} selectedIndex={this.state.selectedPresetIndex}/> 
+                <PresetsPanel 
+                    presets={this.state.presets} 
+                    onSelectEntry={this.onEntrySelected} 
+                    onRemoveEntry={this.onEntryRemoved} 
+                    selectedIndex={this.state.selectedPresetIndex}
+                    editable={this.state.editable}
+                /> 
             </div>
         );
     }
@@ -115,6 +125,10 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
         const newPresets = this.state.presets;
         newPresets.splice(index,1);
         this.setState({presets: newPresets});
+    }
+
+    private onEditButtonClicked() {
+        this.setState({editable: !this.state.editable})
     }
 }
 

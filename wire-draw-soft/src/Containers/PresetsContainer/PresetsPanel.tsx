@@ -8,7 +8,8 @@ export interface IPresetsPanelProps {
     presets: IPreset[]
     onSelectEntry?:  (index: number) => void,
     onRemoveEntry?: (index: number) => void;
-    selectedIndex: number
+    selectedIndex: number,
+    editable: boolean,
 }
 
 export interface IPresetEntryProps {
@@ -16,7 +17,8 @@ export interface IPresetEntryProps {
     onSelectEntry:  (index: number) => void,
     onRemoveEntry: (index: number) => void;
     index: number,
-    isSelected: boolean
+    isSelected: boolean,    
+    editable: boolean,
 }
 
 export const PresetsPanel = (props: IPresetsPanelProps) => {
@@ -47,6 +49,7 @@ export const PresetsPanel = (props: IPresetsPanelProps) => {
                     onRemoveEntry={onRemoveEntry}
                     index={index} 
                     isSelected={selected}
+                    editable={props.editable}
                     />        
             })
         );
@@ -76,6 +79,6 @@ const PresetEntry = (props: IPresetEntryProps) : JSX.Element => {
 
     return ( <div className={cssClass} > 
                 <div className={'preset-label'} onClick={onSelected}> {props.preset.name} {props.preset.speed1} {props.preset.speed2} {props.preset.temperature} </div>
-                <div onClick={onRemoved}> <Icon id='svg' name={IconType.Bin} />  </div>
+                {props.editable ? <div onClick={onRemoved}> <Icon id='svg' name={IconType.Bin} />  </div> : null }
             </div> );    
 }

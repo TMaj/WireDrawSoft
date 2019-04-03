@@ -1,4 +1,5 @@
 import * as React from 'react';
+// import { CustomButtonComponent } from '../CustomButtonComponent/CustomButtonComponent';
 import './NumberInputComponent.css'
 
 export interface INumberInputComponentProps {    
@@ -11,6 +12,10 @@ export interface INumberInputComponentProps {
 
 export const NumberInputComponent = (props: INumberInputComponentProps) => {
     return (
-        <input className="customNumberInput" type="number" step={props.step} value={props.value} onChange={props.onChange} max={props.max} min={props.min}/>
+        // <div className={'custom-number-input-container'}>
+            // <CustomButtonComponent content={'-'}/> 
+            <input className="customNumberInput" type="number" step={props.step} value={props.value} onChange={props.onChange} max={props.max} min={props.min}/>
+            // <CustomButtonComponent content={'+'}/> 
+        // </div>
     );
 }

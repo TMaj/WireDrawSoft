@@ -13,7 +13,7 @@ export const CustomButtonComponent = (props: ICustomButtonProps) => {
     return (
         <button className="customButton" type="submit" {...props}>
          {props.content} 
-         {props.icon ? <Icon name={props.icon}/> : null}
+         {props.icon ? <Icon id={'icon'} name={props.icon}/> : null}
          </button>
     );
 }

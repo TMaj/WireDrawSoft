@@ -1,5 +1,5 @@
 
-.customNumberInput {
+.custom-number-input {
     font-family: 'youngregular';
     font-size: 20px;
     width: 30%;
@@ -10,7 +10,12 @@
     outline: 1px solid #c5c3c6;
 }
 
-.customNumberInput:focus {
+.custom-number-input:focus {
     background-color: #c5c3c6;    
     outline: 2px solid #1985a1;   
+}
+
+.custom-number-input-container {
+    display: flex;
+    flex-direction: row;
 }

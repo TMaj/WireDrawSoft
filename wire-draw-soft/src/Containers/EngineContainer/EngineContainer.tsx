@@ -62,17 +62,22 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
     public render() {        
         const currentSpeed = this.props.currentState['speed'+this.props.engineNumber];
         return (         
-            <div>
-                <img className="Engine-wheel" src={'img/wheel.png'} style = {{animation: 'Engine-wheel-spin infinite '+ currentSpeed +'s linear'}} />
-                <div> Current speed:{currentSpeed} </div>                
-                <form onSubmit={this.sendMessage}>
-                    <label>
-                        Desired speed of engine {this.props.engineNumber}:
-                        <NumberInputComponent step={0.01} value={this.state.speedInputValue} onChange={this.handleStateInputChange} />                     
-                    </label>
-                    <CustomSubmitComponent value="Submit" />
-                </form>                  
-            </div>);
+            <div className='engine-container'>
+                <img className="engine-wheel" src={'img/wheel.png'} style = {{animation: 'engine-wheel-spin infinite '+ currentSpeed +'s linear'}} />
+                
+                <div className='engine-form-container'>
+                    <div> Current speed:{currentSpeed} </div>                
+                    <form onSubmit={this.sendMessage}>
+                        <label>
+                            Desired speed of engine {this.props.engineNumber}:
+                        </label>
+
+                        <NumberInputComponent step={0.01} value={this.state.speedInputValue} onChange={this.handleStateInputChange} />  
+                        <CustomSubmitComponent value="Submit" />
+                    </form>                  
+                </div>
+            </div>
+        );
     }
 
     private getInputLocalStorageKey(): string {

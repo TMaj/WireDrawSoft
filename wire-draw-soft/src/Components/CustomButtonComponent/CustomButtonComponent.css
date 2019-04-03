@@ -9,11 +9,26 @@
     background-color: #c5c3c6;
     cursor: pointer;
 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.customButton * {
+    margin-right: 0px;
+    margin-left: 0px;
+    display: flex;
 }
 
 .customButton:hover {
     background-color: #1985a1;
     outline: 2px solid #dcdcdd;
+    color: white
+}
+
+.customButton:active {
+    background-color: #4c5c68;
+    outline: 2px solid white;
     color: white
 }
 

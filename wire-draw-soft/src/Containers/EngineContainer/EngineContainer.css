@@ -1,9 +1,22 @@
-.Engine-wheel {
-    animation: Engine-wheel-spin infinite 20s linear;
-    height: 180px;
+.engine-wheel {
+    animation: engine-wheel-spin infinite 20s linear;
+    height: 250px;
   }
 
-  @keyframes Engine-wheel-spin {
+.engine-container {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.engine-form-container {  
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start
+}
+
+  @keyframes engine-wheel-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
   }
