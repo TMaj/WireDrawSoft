@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { IPreset } from 'src/Common/Interfaces';
 import { Icon } from 'src/Components/IconComponent/IconComponent';
 import { IconType } from '../../Resources/SVG';
-import { IPreset } from './PresetsContainer';
 import './PresetsContainer.css';
 
 export interface IPresetsPanelProps {
@@ -29,9 +29,9 @@ export const PresetsPanel = (props: IPresetsPanelProps) => {
        }
     };
 
-    const onRemoveEntry = (index: number) => {
+    const onRemoveEntry = (id: number) => {
         if (props.onRemoveEntry) {
-            props.onRemoveEntry(index);
+            props.onRemoveEntry(id);
         } 
     };
 
@@ -71,7 +71,7 @@ const PresetEntry = (props: IPresetEntryProps) : JSX.Element => {
 
         // tslint:disable-next-line:no-console
         console.log('Entry removed');
-        props.onRemoveEntry(props.index);
+        props.onRemoveEntry(props.preset.id);
     };
 
     let cssClass = 'preset-entry ';

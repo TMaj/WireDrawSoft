@@ -1,13 +1,21 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 
 .custom-number-input {
-    font-family: 'youngregular';
     font-size: 20px;
     width: 30%;
+    margin-left: 4px;
+    margin-right: 4px;
     padding: 12px 20px;
-    margin: 8px 0;
     box-sizing: border-box;
     background-color: #dcdcdd;
-    outline: 1px solid #c5c3c6;
+}
+
+.custom-number-input-container button {
+        margin: 0px;    
 }
 
 .custom-number-input:focus {

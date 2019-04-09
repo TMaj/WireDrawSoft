@@ -16,6 +16,15 @@
   align-items: flex-start
 }
 
+.engine-speed-label {
+  font-size: 30px;
+}
+
+.engine-speed-value {
+  font-weight: bold;
+  font-size: 40px;
+}
+
   @keyframes engine-wheel-spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }

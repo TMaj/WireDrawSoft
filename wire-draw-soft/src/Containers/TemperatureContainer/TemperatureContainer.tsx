@@ -6,6 +6,7 @@ import { SubmitUpdate, UpdateTempInputValue } from 'src/Common/Actions';
 import { IProcessState, IState } from "src/Common/Interfaces";
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
+import './TemperatureContainer.css'
 
 interface ITemperatureContainerStoreProps {
     currentState: IProcessState
@@ -55,8 +56,7 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
 
     public render() {
         return(
-            <div>
-                <div>
+            <div className='temperature-container'>
                     <Thermometer
                     theme="light"
                     value={this.props.currentState.temperature}
@@ -66,27 +66,26 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
                     size="large"
                     height="300"
                     />
-                </div>
-                <div>
-                  Current temperature: {this.props.currentState.temperature}
-                </div>
-                <form onSubmit={this.sendMessage}>
-                    <label>
-                        Desired temperature:
-                        <NumberInputComponent step={0.01} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={200} min ={0}/>                    
-                    </label>
+                <div className='temperature-form-container'>
+                    <div className='temperature-label'> Current temperature:
+                        <span className='temperature-value'> {this.props.currentState.temperature} </span> 
+                    </div>
+                    <form onSubmit={this.sendMessage}>
+                        <label>
+                            Desired temperature:
+                        </label>
+                        <NumberInputComponent step={0.1} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={200} min ={0}/>                    
                         <CustomSubmitComponent value="Submit" />
-                </form>                        
-
+                    </form>                        
+                </div>
             </div>
         );
     }
 
-    private handleTemperatureInputChange(event: React.FormEvent<HTMLInputElement>) {
-        const newFloatValue = parseFloat(event.currentTarget.value);
-        this.setState({ temperatureInputValue: newFloatValue });
-        window.localStorage.setItem('temperatureInputValue', event.currentTarget.value)
-        this.props.updateTempInput(newFloatValue);
+    private handleTemperatureInputChange(value: number) {
+        this.setState({ temperatureInputValue: value });
+        window.localStorage.setItem('temperatureInputValue', value.toString())
+        this.props.updateTempInput(value);
     }
 }
 

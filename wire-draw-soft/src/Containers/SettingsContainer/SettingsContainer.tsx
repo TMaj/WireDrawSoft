@@ -4,6 +4,8 @@ import { Dispatch } from 'redux';
 import { SubmitUpdate } from 'src/Common/Actions';
 import { IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';
+import { IconType } from 'src/Resources/SVG';
+import './SettingsContainer.css';
 
 interface ISettingsContainerStoreProps {
     currentState: IProcessState,
@@ -27,10 +29,10 @@ class SettingsContainer extends React.Component<ISettingsContainerProps> {
 
     public render() {
         return (
-            <div> 
+            <div className='settings-container'> 
                 <div> <CustomButtonComponent content="Submit all" onClick ={this.onSubmitAllButtonClick}/> </div>
                 <div> <CustomButtonComponent content="Reset all" onClick ={this.onResetAllButtonClick}/> </div>
-                <div> <CustomButtonComponent content="Other" onClick ={this.onButtonClick}/> </div>
+                <div> <CustomButtonComponent content="Settings" icon={IconType.Settings} onClick ={this.onButtonClick}/> </div>
             </div>
         );
     }

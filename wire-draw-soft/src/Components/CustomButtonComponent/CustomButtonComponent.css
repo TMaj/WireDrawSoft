@@ -20,10 +20,15 @@
     display: flex;
 }
 
+.customButton .icon {
+    width: 20px
+}
+
 .customButton:hover {
     background-color: #1985a1;
     outline: 2px solid #dcdcdd;
-    color: white
+    color: white;
+    fill: white;
 }
 
 .customButton:active {
