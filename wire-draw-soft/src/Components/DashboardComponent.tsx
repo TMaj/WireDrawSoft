@@ -4,6 +4,7 @@ import EngineContainer from 'src/Containers/EngineContainer/EngineContainer';
 import PresetsContainer from 'src/Containers/PresetsContainer/PresetsContainer';
 import SettingsContainer from 'src/Containers/SettingsContainer/SettingsContainer';
 import TemperatureContainer from 'src/Containers/TemperatureContainer/TemperatureContainer';
+import VideoContainer from 'src/Containers/VideoContainer/VideoContainer';
 import './DashboardComponent.css';
 
 export const DashboardComponent = () => {
@@ -28,7 +29,7 @@ export const DashboardComponent = () => {
                 <TemperatureContainer/>
             </div>
             <div className="VideoPanel">
-                eee
+                <VideoContainer />
             </div>
         </div>
     );

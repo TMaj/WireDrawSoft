@@ -64,8 +64,7 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
         const currentSpeed = this.props.currentState['speed'+this.props.engineNumber];
         return (         
             <div className='engine-container'>
-                <img className="engine-wheel" src={'img/wheel.png'} style = {{animation: 'engine-wheel-spin infinite '+ currentSpeed +'s linear'}} />
-                
+                <img className="engine-wheel" src={'img/wheel.png'} style = {{animation: 'engine-wheel-spin infinite '+ currentSpeed +'s linear'}} />                
                 <div className='engine-form-container'>
                     <div className='engine-speed-label'> Current speed: 
                         <span className='engine-speed-value'> {currentSpeed} </span>

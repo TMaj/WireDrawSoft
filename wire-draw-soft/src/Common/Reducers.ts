@@ -81,7 +81,7 @@ export const reducer = (state = initialState, action: IAction): IState => {
       }
       case ACTION_ADD_PRESET_SUCCESS: {
         return { ...state,
-          presets: [...state.presets, action.payload]
+          presets: [action.payload, ...state.presets]
         };
       }
       case ACTION_DELETE_PRESET: {

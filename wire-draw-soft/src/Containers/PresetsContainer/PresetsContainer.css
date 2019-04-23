@@ -43,6 +43,16 @@
     overflow: auto;
 }
 
+.preset-entries table {
+    width: 80%;
+}
+
+.preset-entries table tr{
+    display: flex;
+    justify-content: flex-start;
+    justify-content: space-between;
+}
+
 #new-preset-input {
     width: 100%;
     margin-left: 4px;
@@ -58,12 +68,24 @@
     background-color: #c5c3c6;     
     fill: #e5e5e6;
     height: 39px;
+    outline: 1px solid white;
 }
 
 .preset-entry .preset-label{
-    width:100%;
+    width: 80%;
     padding-top: 10px;
-}
+    display: flex;
+    justify-content: flex-start;
+    justify-content: space-between;
+} 
+
+.preset-entry .preset-label .name-item{
+    flex-grow: 9;
+} 
+
+.preset-entry .preset-label .item{
+    flex-grow: 8;
+} 
 
 .preset-entry * {
    margin-bottom: 2px;
@@ -93,6 +115,11 @@
 
  #svg {
     z-index: 2;
+}
+
+#preset-entry-icon {
+    width: 24px;
+    height: 24px;
 }
 
 /* .svg:hover {

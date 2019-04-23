@@ -54,12 +54,7 @@ class ChartsContainer extends React.Component<IChartsContainerStoreProps, IChart
 
     public render() {
         
-        const data = this.state.stateStatistics; 
-        // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400},
-        // {name: 'Page A', uv: 400, pv: 2400, amt: 2400},
-        // {name: 'Page B', uv: 800, pv: 2400, amt: 2400},
-        // {name: 'Page C', uv: 900, pv: 2400, amt: 2400}
-        // ];
+        const data = this.state.stateStatistics;  
         return(            
            <div>
             <LineChart width={600} height={300} data={data}>

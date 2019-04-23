@@ -57,6 +57,7 @@ export const PresetsPanel = (props: IPresetsPanelProps) => {
 
     return (
         <div className="preset-entries">
+        <table><tbody><tr><th>Name</th><th>Speed 1</th><th>Speed 2</th><th>Temperature</th></tr></tbody></table>
             {renderPresetsList()}
         </div>
     );
@@ -68,7 +69,6 @@ const PresetEntry = (props: IPresetEntryProps) : JSX.Element => {
     };
 
     const onRemoved = () => {
-
         // tslint:disable-next-line:no-console
         console.log('Entry removed');
         props.onRemoveEntry(props.preset.id);
@@ -77,8 +77,13 @@ const PresetEntry = (props: IPresetEntryProps) : JSX.Element => {
     let cssClass = 'preset-entry ';
     cssClass = cssClass.concat(props.isSelected ? 'preset-entry--selected' : 'preset-entry--unselected'); 
 
-    return ( <div className={cssClass} > 
-                <div className={'preset-label'} onClick={onSelected}> {props.preset.name} {props.preset.speed1} {props.preset.speed2} {props.preset.temperature} </div>
+    return ( <div className={cssClass} onClick={onSelected}> 
+                <div className={'preset-label'} > 
+                    <span className={'name-item'}> {props.preset.name} </span>                  
+                    <span className={'item'}> {props.preset.speed1} </span>
+                    <span className={'item'}> {props.preset.speed2} </span>
+                    <span className={'item'}> {props.preset.temperature} </span>
+                </div>
                 {props.editable ? <div onClick={onRemoved}> <Icon id='svg' name={IconType.Bin} />  </div> : null }
             </div> );    
 }

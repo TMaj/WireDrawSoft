@@ -13,9 +13,11 @@ html, body, .grid-container { height: 100%; margin: 0; }
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr  min-content;
+  grid-auto-rows: minmax(100px, auto); */
   grid-template-areas: "MenuPanel LeftEnginePanel RightEnginePanel" "PresetsPanel ChartsPanel TemperaturePanel" "VideoPanel ChartsPanel TemperaturePanel";
+
 }
 
 .LeftEnginePanel { 

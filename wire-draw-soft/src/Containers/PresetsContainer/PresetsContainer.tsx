@@ -48,6 +48,8 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
             selectedPresetIndex: -1,           
         }
 
+        this.onKeyPressed = this.onKeyPressed.bind(this);
+        this.onAddClick = this.onAddClick.bind(this);
         this.onAddPresetButtonClick = this.onAddPresetButtonClick.bind(this);    
         this.onSubmitPresetButtonClick = this.onSubmitPresetButtonClick.bind(this);
         this.onEntrySelected = this.onEntrySelected.bind(this);
@@ -75,7 +77,7 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
                 </div>
                 {this.renderAddPresetForm()}
                 <PresetsPanel 
-                    presets={this.props.presets || []} 
+                    presets={this.props.presets.sort((a,b) => b.id - a.id) || []} 
                     onSelectEntry={this.onEntrySelected} 
                     onRemoveEntry={this.onEntryRemoved} 
                     selectedIndex={this.state.selectedPresetIndex}
@@ -85,23 +87,32 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
         );
     }
 
+    private onKeyPressed(event: KeyboardEvent) {
+        if (event.keyCode === 13) {
+            this.onAddClick();
+        }
+    }
+
+    private onAddClick() {
+        const newPreset = {                           
+            name: this.state.presetNameInputValue || 'Default preset name',
+            speed1: this.props.inputsState.speed1,
+            speed2: this.props.inputsState.speed2,
+            temperature: this.props.inputsState.temperature
+        } as IPreset;
+
+        this.props.addNewPreset(newPreset);
+
+        this.setState({ presetNameInputValue: '', addPresetButtonDisabled: false, addPresetFormVisible: false, presets: [...this.state.presets, newPreset] });
+    }
+
     private renderAddPresetForm(): JSX.Element | null {
         if (!this.state.addPresetFormVisible) {
+            window.removeEventListener('keypress', this.onKeyPressed, true);         
             return null;
-        }         
-
-        const onClick = () => {
-            const newPreset = {                           
-                name: this.state.presetNameInputValue || 'Default preset name',
-                speed1: this.props.inputsState.speed1,
-                speed2: this.props.inputsState.speed2,
-                temperature: this.props.inputsState.temperature
-            } as IPreset;
-
-            this.props.addNewPreset(newPreset);
-
-            this.setState({ presetNameInputValue: '', addPresetButtonDisabled: false, addPresetFormVisible: false, presets: [...this.state.presets, newPreset] });
         }
+        
+        window.addEventListener('keypress', this.onKeyPressed, true);
 
         const onValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             this.setState({presetNameInputValue: event.currentTarget.value});
@@ -109,7 +120,7 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
 
         return <div id="add-new" className='add-new-panel'>
                     <CustomInputComponent id={'new-preset-input'} onChange={onValueChange}/> 
-                    <CustomButtonComponent id={'new-preset-button'} content='Add' onClick={onClick}/>
+                    <CustomButtonComponent id={'new-preset-button'} content='Add' onClick={this.onAddClick}/>
                </div>
     }
 
@@ -118,7 +129,7 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
     }
 
     private onSubmitPresetButtonClick() {        
-        this.props.submitUpdate(this.state.presets[this.state.selectedPresetIndex] as IProcessState)
+        this.props.submitUpdate(this.props.presets[this.state.selectedPresetIndex] as IProcessState)
     }
 
     private onEntrySelected(index: number) {
@@ -126,10 +137,7 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
     }
 
     private onEntryRemoved(id: number) {
-        this.props.deletePreset(id);
-        // const newPresets = this.state.presets;
-        // newPresets.splice(index,1);
-        // this.setState({presets: newPresets});
+        this.props.deletePreset(id); 
     }
 
     private onEditButtonClicked() {
