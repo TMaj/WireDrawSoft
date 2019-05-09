@@ -1,0 +1,29 @@
+
+.charts-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    
+}
+
+.charts-container .ReactModal__Overlay{
+    z-index: 2;
+}
+
+.modal-container {
+    display: flex;
+}
+
+.sessions-panel {
+    margin-left: 10px;
+    margin-right: 5px;
+    width:30%;
+}
+
+.charts-panel {
+    margin-left: 5px;
+    margin-right: 10px;
+    width: 70%;
+}

@@ -34,6 +34,10 @@ async function getAllPresets() {
     return await axios.get(`${apiUrl}/presets`);
 }
 
+// async function getAllSessions() {
+//     return await axios.get(`${apiUrl}/sessions`)
+// }
+
 export function* addPreset(action: IAddNewPresetAction) {    
     try {
        const response = yield call(postNewPreset, action.payload);

@@ -35,6 +35,7 @@
     "react-dev-utils": "^5.0.2",
     "react-dom": "^16.8.5",
     "react-inlinesvg": "^0.8.4",
+    "react-modal": "^3.8.1",
     "react-redux": "^5.1.1",
     "react-stomp": "^4.0.0",
     "react-thermometer-component": "^1.0.1",

@@ -9,8 +9,7 @@ input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
 
-.customInput {
-    font-family: 'youngregular';
+.customInput { 
     font-size: 14px;
     width: 80%;
     padding: 12px 20px;
