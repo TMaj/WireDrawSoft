@@ -19,3 +19,9 @@ export interface IPreset {
     speed2: number;
     temperature: number;
 }
+
+export interface ISession {
+    date: string;
+    start: string;
+    end: string;
+}

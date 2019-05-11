@@ -27,3 +27,15 @@
     margin-right: 10px;
     width: 70%;
 }
+
+.modal-container {
+    height: 100%;
+}
+
+.sessions-panel {
+    height: 100%
+}
+
+.charts-panel {
+   height: 100%;
+}

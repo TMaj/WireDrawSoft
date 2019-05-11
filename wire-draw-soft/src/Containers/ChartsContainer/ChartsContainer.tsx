@@ -85,8 +85,8 @@ class ChartsContainer extends React.Component<IChartsContainerStoreProps, IChart
            </div>
            <div>  
                 <CustomButtonComponent content={'[  ]'} onClick={this.toogleModal}/>
-                <Modal style={{'z-index':'99'}} isOpen={this.state.modalVisible} > 
-                    <button onClick={this.toogleModal}>Close Modal</button> 
+                <Modal style={{'z-index':'99'}} isOpen={this.state.modalVisible} onRequestClose={this.toogleModal} > 
+                    {/* <button onClick={this.toogleModal}>Close Modal</button>  */}
                     <DetailedChartsContainer/>
                 </Modal>
            </div> 

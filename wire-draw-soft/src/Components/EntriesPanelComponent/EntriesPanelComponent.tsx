@@ -1,7 +1,7 @@
 import * as React from 'react'; 
 import { Icon } from 'src/Components/IconComponent/IconComponent';
 import { IconType } from '../../Resources/SVG';
-import './EntriesContainer.css';
+import './EntriesPanel.css';
 
 export interface IComlumnInfo {
     columnName: string,
@@ -63,7 +63,7 @@ export const EntriesPanel = (props: IEntriesPanelProps) => {
     };
 
     return (
-        <div className="preset-entries">
+        <div className="preset-entries-table">
          { <div className={'preset-header'}> 
                 <div className={'preset-label'} > 
                     {props.columnInfo.map((info: IComlumnInfo, index) => <span className={'item'} key={index}> { info.columnName } </span>)} 

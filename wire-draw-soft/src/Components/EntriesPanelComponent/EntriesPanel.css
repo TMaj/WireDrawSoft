@@ -37,9 +37,9 @@
     padding: 15px;
 }
 
-.preset-entries {
+.preset-entries-table {
     background-color: #e5e5e6;
-    height: 200px;
+    height: 100%;
     overflow: auto;
 }
 
