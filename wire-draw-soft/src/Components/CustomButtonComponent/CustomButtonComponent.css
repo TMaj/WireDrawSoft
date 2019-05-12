@@ -42,3 +42,8 @@
     color:  #c5c3c6;
     cursor: default;
 }
+
+.customButton svg {
+    height: 35px;
+    width: 35px;
+}

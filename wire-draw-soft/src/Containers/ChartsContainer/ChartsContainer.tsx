@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
 import { IProcessState, IState } from "src/Common/Interfaces";
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';  
+import { IconType } from 'src/Resources/SVG';
 import './ChartsContainer.css';
 import DetailedChartsContainer from './DetailedChartsContainer';
 
@@ -84,10 +85,9 @@ class ChartsContainer extends React.Component<IChartsContainerStoreProps, IChart
                 </LineChart>
            </div>
            <div>  
-                <CustomButtonComponent content={'[  ]'} onClick={this.toogleModal}/>
-                <Modal style={{'z-index':'99'}} isOpen={this.state.modalVisible} onRequestClose={this.toogleModal} > 
-                    {/* <button onClick={this.toogleModal}>Close Modal</button>  */}
-                    <DetailedChartsContainer/>
+                <CustomButtonComponent icon={IconType.Zoom} onClick={this.toogleModal}/>
+                <Modal isOpen={this.state.modalVisible} onRequestClose={this.toogleModal} > 
+                        <DetailedChartsContainer/>
                 </Modal>
            </div> 
         </div> 

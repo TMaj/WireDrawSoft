@@ -1,11 +1,13 @@
 import * as React from 'react'
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { SubmitUpdate } from 'src/Common/Actions';
 import { IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';
 import { IconType } from 'src/Resources/SVG';
-import './SettingsContainer.css';
+import './SettingsContainer.css';  
+import { SettingsPanel } from './SettingsPanel';
 
 interface ISettingsContainerStoreProps {
     currentState: IProcessState,
@@ -16,13 +18,22 @@ interface ISettingsContainerDispatchProps {
     submitUpdate: (state: IProcessState) => void;
 }
 
+interface ISettingsContainerState {
+    modalVisible: boolean;
+}
+
 export type ISettingsContainerProps = ISettingsContainerStoreProps & ISettingsContainerDispatchProps;
 
-class SettingsContainer extends React.Component<ISettingsContainerProps> {
+
+class SettingsContainer extends React.Component<ISettingsContainerProps, ISettingsContainerState> {
     constructor(props: any) {
         super(props);
 
-        this.onButtonClick = this.onButtonClick.bind(this);
+        this.state = {
+            modalVisible: false,
+        }
+
+        this.onSettingsButtonClick = this.onSettingsButtonClick.bind(this);
         this.onSubmitAllButtonClick = this.onSubmitAllButtonClick.bind(this);
         this.onResetAllButtonClick = this.onResetAllButtonClick.bind(this);
     }   
@@ -32,7 +43,10 @@ class SettingsContainer extends React.Component<ISettingsContainerProps> {
             <div className='settings-container'> 
                 <div> <CustomButtonComponent content="Submit all" onClick ={this.onSubmitAllButtonClick}/> </div>
                 <div> <CustomButtonComponent content="Reset all" onClick ={this.onResetAllButtonClick}/> </div>
-                <div> <CustomButtonComponent content="Settings" icon={IconType.Settings} onClick ={this.onButtonClick}/> </div>
+                <div> <CustomButtonComponent content="Settings" icon={IconType.Settings} onClick ={this.onSettingsButtonClick}/> </div> 
+                <Modal isOpen={this.state.modalVisible} onRequestClose={this.onSettingsButtonClick}>
+                    <SettingsPanel/>
+                </Modal>
             </div>
         );
     }
@@ -49,9 +63,8 @@ class SettingsContainer extends React.Component<ISettingsContainerProps> {
         } as IProcessState );
     }
 
-    private onButtonClick = () => {
-        // tslint:disable-next-line:no-console
-        console.log("Button clicked");
+    private onSettingsButtonClick = () => {
+        this.setState({modalVisible: !this.state.modalVisible});
     }
 }
 

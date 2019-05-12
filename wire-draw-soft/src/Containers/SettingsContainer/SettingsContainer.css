@@ -4,3 +4,8 @@
 .settings-container * button {
     width: 100%;
 }
+
+/* .settings-panel {
+    display: flex;
+    flex-direction: rows;
+} */
