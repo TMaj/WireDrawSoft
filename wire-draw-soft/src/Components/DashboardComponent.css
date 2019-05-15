@@ -16,7 +16,7 @@ html, body, .grid-container { height: 100%; margin: 0; }
   /* grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr  min-content;
   grid-auto-rows: minmax(100px, auto); */
-  grid-template-areas: "MenuPanel LeftEnginePanel RightEnginePanel" "PresetsPanel ChartsPanel TemperaturePanel" "VideoPanel ChartsPanel TemperaturePanel";
+  grid-template-areas: "MenuPanel LeftEnginePanel RightEnginePanel" "PresetsPanel ChartsPanel TemperaturePanel" "VideoPanel ChartsPanel StatusPanel";
 
 }
 
@@ -60,6 +60,12 @@ html, body, .grid-container { height: 100%; margin: 0; }
 
  .VideoPanel { 
   grid-area: VideoPanel; 
+  border: 1px solid #4c5c68;; 
+  padding: 10px 10px 10px 10px;
+ }
+
+ .StatusPanel {
+  grid-area: StatusPanel; 
   border: 1px solid #4c5c68;; 
   padding: 10px 10px 10px 10px;
  }

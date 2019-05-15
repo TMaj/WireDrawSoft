@@ -1,0 +1,35 @@
+.toggle-component-container {
+    width: 60px;
+    height: 30px;
+    background-color: #e8eef2;
+}
+
+.toggle-component{
+    position: relative;
+    width: 30px;
+    height: 30px;
+}  
+
+.on { 
+    background-color: green;
+    animation-name: on-transition;
+    animation-duration: 1s;
+    left: 30px;
+}
+
+.off { 
+    background-color: red;
+    animation-name: off-transition;
+    animation-duration: 1s;
+    left: 0px;
+}
+
+@keyframes on-transition {
+    0%   {background-color:red; left:0px;}    
+    100% {background-color:green; left:30px;}
+}
+
+@keyframes off-transition {
+    0%   {background-color:green; left:30px;}    
+    100% {background-color:red; left:0px;}
+}

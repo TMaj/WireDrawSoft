@@ -4,12 +4,17 @@ export interface IProcessState {
     temperature: number;
 }
 
+export interface IConnectionsStatus {
+    connectedToServer: boolean;
+}
+
 export interface IState {
     currentState: IProcessState;
     inputsState: IProcessState; 
     presetsState: IProcessState;
     presets: IPreset[];
     presetsLoading: boolean;
+    connectionsStatus: IConnectionsStatus;
 }
 
 export interface IPreset {

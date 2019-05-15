@@ -1,0 +1,41 @@
+.spinner-component-container {
+    width: 120px;
+    height: 30px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.spinner-component { 
+    width: 30px;
+    height: 30px;
+}  
+
+.one { 
+    background-color: #545e75;
+    animation-name: toggle;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite; 
+}
+
+.two {   
+    background-color: #545e75;
+    animation-name: toggle;
+    animation-duration: 1.5s;
+    animation-delay: 0.3s;
+    animation-iteration-count: infinite; 
+}
+
+.three { 
+    background-color: #545e75;
+    animation-name: toggle;
+    animation-duration: 1.5s; 
+    animation-iteration-count: infinite; 
+    animation-delay: 0.6s;
+}  
+
+@keyframes toggle {
+    0%   {background-color:#545e75; width: 30px; height: 30px; }  
+    50%  {background-color:#63adf2; width: 20px; height: 20px; }
+    100% {background-color:#545e75; width: 30px; height: 30px; }
+} 

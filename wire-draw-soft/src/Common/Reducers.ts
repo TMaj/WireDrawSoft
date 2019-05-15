@@ -1,20 +1,11 @@
 import { IPreset, IState } from 'src/Common/Interfaces';
 import { IAction } from './Actions';
-import { 
-  ACTION_ADD_PRESET,
-  ACTION_ADD_PRESET_SUCCESS, 
-  ACTION_DELETE_PRESET,
-  ACTION_DELETE_PRESET_SUCCESS,
-  ACTION_GET_PRESETS, 
-  ACTION_GET_PRESETS_SUCCESS,
-  ACTION_SUBMIT,
-  ACTION_UPDATE,
-  ACTION_UPDATE_INPUT_SPEED_1,
-  ACTION_UPDATE_INPUT_SPEED_2,
-  ACTION_UPDATE_INPUT_TEMP,
-  ACTION_UPDATE_PRESET_STATE, } from './Constans';
+import { ActionType } from './Constans';
 
 const initialState = {
+    connectionsStatus: {
+      connectedToServer: false,
+    },
     currentState : {},
     inputsState: {},
     presets: [] as IPreset[],    
@@ -24,72 +15,77 @@ const initialState = {
 
 export const reducer = (state = initialState, action: IAction): IState => {
     switch (action.type) {
-      case ACTION_UPDATE: {
+      case ActionType.ACTION_UPDATE: {
         return { 
           ...state,
           currentState: action.payload
         };
       }
-      case ACTION_SUBMIT: {
+      case ActionType.ACTION_SUBMIT: {
         return state;        
       }
-      case ACTION_UPDATE_INPUT_SPEED_1: {
+      case ActionType.ACTION_UPDATE_INPUT_SPEED_1: {
         return { 
           ...state,
           inputsState: { ...state.inputsState, speed1: action.payload }
         };
       }
-      case ACTION_UPDATE_INPUT_SPEED_2: {
+      case ActionType.ACTION_UPDATE_INPUT_SPEED_2: {
         return { 
           ...state,
           inputsState: { ...state.inputsState, speed2: action.payload }
         };
       }
-      case ACTION_UPDATE_INPUT_TEMP: {
+      case ActionType.ACTION_UPDATE_INPUT_TEMP: {
         return { 
           ...state,
           inputsState: { ...state.inputsState, temperature: action.payload }
         };
       }
-      case ACTION_UPDATE_PRESET_STATE: {
+      case ActionType.ACTION_UPDATE_PRESET_STATE: {
         return { 
           ...state,
           presetsState: action.payload
         };
       }
-      case ACTION_GET_PRESETS: {
+      case ActionType.ACTION_GET_PRESETS: {
         return {
           ...state,
           presetsLoading: true
         };
       }
-      case ACTION_GET_PRESETS_SUCCESS: {
+      case ActionType.ACTION_GET_PRESETS_SUCCESS: {
         return {
           ...state,          
           presets: action.payload,
           presetsLoading: false,
         };
       }
-      case ACTION_ADD_PRESET: {
+      case ActionType.ACTION_ADD_PRESET: {
         return state;
       }
-      case ACTION_ADD_PRESET_SUCCESS: {
+      case ActionType.ACTION_ADD_PRESET_SUCCESS: {
         return {
           ...state,
           presets: [...state.presets, action.payload]
         }
       }
-      case ACTION_ADD_PRESET_SUCCESS: {
+      case ActionType.ACTION_ADD_PRESET_SUCCESS: {
         return { ...state,
           presets: [action.payload, ...state.presets]
         };
       }
-      case ACTION_DELETE_PRESET: {
+      case ActionType.ACTION_DELETE_PRESET: {
         return { ...state   };
       }
-      case ACTION_DELETE_PRESET_SUCCESS: {
+      case ActionType.ACTION_DELETE_PRESET_SUCCESS: {
         return { ...state,
           presets: action.payload
+        };
+      }
+      case ActionType.ACTION_UPDATE_CONNECTIONS_STATE: {
+        return { ...state,
+          connectionsStatus: action.payload
         };
       }
         

@@ -1,11 +1,9 @@
-import { IPreset, IProcessState } from '../Common/Interfaces';
+import { IConnectionsStatus, IPreset, IProcessState } from '../Common/Interfaces';
 
-import { ACTION_ADD_PRESET, ACTION_ADD_PRESET_SUCCESS, ACTION_DELETE_PRESET, ACTION_DELETE_PRESET_SUCCESS, 
-    ACTION_GET_PRESETS, ACTION_GET_PRESETS_SUCCESS, ACTION_SUBMIT, ACTION_UPDATE,
-     ACTION_UPDATE_INPUT_SPEED_1, ACTION_UPDATE_INPUT_SPEED_2, ACTION_UPDATE_INPUT_TEMP, ACTION_UPDATE_PRESET_STATE } from "./Constans";
+import { ActionType } from "./Constans";
 
 export interface IAction {
-    type: string,
+    type: ActionType,
     payload: any 
 }
 
@@ -17,7 +15,7 @@ interface IUpdateStoreAction {
 export  const UpdateStore = (stateUpdate: IProcessState): IUpdateStoreAction => {
     return { 
         payload: stateUpdate,
-        type: ACTION_UPDATE,
+        type: ActionType.ACTION_UPDATE,
     } as IUpdateStoreAction;
 }
 
@@ -29,14 +27,14 @@ export interface IStateUpdateAction {
 export  const SubmitUpdate = (stateUpdate: IProcessState): IStateUpdateAction => {
     return { 
         payload: stateUpdate,
-        type: ACTION_SUBMIT,
+        type: ActionType.ACTION_SUBMIT,
     } as IStateUpdateAction;
 }
 
 export  const UpdatePresetState = (stateUpdate: IProcessState): IStateUpdateAction => {
     return { 
         payload: stateUpdate,
-        type: ACTION_UPDATE_PRESET_STATE,
+        type: ActionType.ACTION_UPDATE_PRESET_STATE,
     } as IStateUpdateAction;
 }
 
@@ -46,7 +44,7 @@ export interface IInputUpdateAction {
 }
 
 export  const UpdateSpeedInputValue = (inputUpdate: number, engineNumber: number): IInputUpdateAction => {
-    const actionType = engineNumber === 1 ? ACTION_UPDATE_INPUT_SPEED_1 : ACTION_UPDATE_INPUT_SPEED_2;
+    const actionType = engineNumber === 1 ? ActionType.ACTION_UPDATE_INPUT_SPEED_1 : ActionType.ACTION_UPDATE_INPUT_SPEED_2;
 
     return { 
         payload: inputUpdate,
@@ -57,7 +55,7 @@ export  const UpdateSpeedInputValue = (inputUpdate: number, engineNumber: number
 export  const UpdateTempInputValue = (inputUpdate: number): IInputUpdateAction => {
     return { 
         payload: inputUpdate,
-        type: ACTION_UPDATE_INPUT_TEMP,
+        type: ActionType.ACTION_UPDATE_INPUT_TEMP,
     } as IInputUpdateAction;
 }
 
@@ -67,7 +65,7 @@ export interface IGetAllPresetsAction {
 
 export const GetAllPresets = (): IGetAllPresetsAction => {
     return {
-        type: ACTION_GET_PRESETS
+        type: ActionType.ACTION_GET_PRESETS
     };
 }
 
@@ -79,7 +77,7 @@ export interface IGetAllPresetsSuccessAction {
 export const GetAllPresetsSuccess = (presets: IPreset[]): IGetAllPresetsSuccessAction => {
     return {        
         payload: presets,
-        type: ACTION_GET_PRESETS_SUCCESS,
+        type: ActionType.ACTION_GET_PRESETS_SUCCESS,
     };
 }
 
@@ -91,14 +89,14 @@ export interface IAddNewPresetAction {
 export const AddNewPreset = (newPreset: IPreset): IAddNewPresetAction => {
     return {   
         payload: newPreset,
-        type: ACTION_ADD_PRESET     
+        type: ActionType.ACTION_ADD_PRESET     
     };
 }
 
 export const AddNewPresetSuccess = (newPreset: IPreset): IAddNewPresetAction => {
     return {   
         payload: newPreset,
-        type: ACTION_ADD_PRESET_SUCCESS    
+        type: ActionType.ACTION_ADD_PRESET_SUCCESS    
     };
 }
 
@@ -110,7 +108,7 @@ export interface IDeletePresetAction {
 export const DeletePreset = (presetId: number): IDeletePresetAction => {
     return {   
         payload: presetId,
-        type: ACTION_DELETE_PRESET     
+        type: ActionType.ACTION_DELETE_PRESET     
     };
 }
 
@@ -122,6 +120,18 @@ export interface IDeletePresetSuccessAction {
 export const DeletePresetSuccess = (presets: IPreset[]): IDeletePresetSuccessAction => {
     return {   
         payload: presets,
-        type: ACTION_DELETE_PRESET_SUCCESS     
+        type: ActionType.ACTION_DELETE_PRESET_SUCCESS     
+    };
+}
+
+export interface IConnectionsStateUpdateAction {
+    type: string;
+    payload: IConnectionsStatus;
+}
+
+export const UpdateConnectionsState = (update: IConnectionsStatus): IConnectionsStateUpdateAction => {
+    return {   
+        payload: update,
+        type: ActionType.ACTION_UPDATE_CONNECTIONS_STATE     
     };
 }

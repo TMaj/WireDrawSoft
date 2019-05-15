@@ -2,11 +2,11 @@ import { call, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
 import axios from 'axios';
 import { IPreset, IProcessState } from 'src/Common/Interfaces';
 import { parseToString } from 'src/Common/Parser';
-import socket from 'src/WebSocket/WebSocket';
-import { AddNewPresetSuccess, DeletePresetSuccess, GetAllPresetsSuccess, IAddNewPresetAction, IDeletePresetAction, IGetAllPresetsAction, IStateUpdateAction } from './Actions';
-import { ACTION_ADD_PRESET, ACTION_DELETE_PRESET, ACTION_GET_PRESETS, ACTION_SUBMIT } from './Constans';
+import { MyWebSocket } from 'src/WebSocket/WebSocket';
+import { AddNewPresetSuccess, DeletePresetSuccess, GetAllPresetsSuccess, IAddNewPresetAction, IDeletePresetAction, IStateUpdateAction } from './Actions';
+import { ActionType } from './Constans';
 
-const apiUrl = 'http://localhost:8001'
+const apiUrl = 'http://localhost:8001'; 
 
 export function* submitUpdate(action: IStateUpdateAction) {
     yield call(sendUpdate, action.payload);
@@ -14,13 +14,13 @@ export function* submitUpdate(action: IStateUpdateAction) {
 
 async function sendUpdate(update: IProcessState) {
     const message = await parseToString(update) as string;
-    socket.send(message);
+    MyWebSocket.websocket.send(message);
 }
 
-export function* getPresets(action: IGetAllPresetsAction) {
+export function* getPresets() {
     try {        
         // tslint:disable-next-line:no-console
-        console.log('Getting presets');
+        console.log('Sagas :: Getting presets');
         const presetsRequest = yield call(getAllPresets);
         // tslint:disable-next-line:no-console
         console.log(presetsRequest.data);
@@ -33,10 +33,6 @@ export function* getPresets(action: IGetAllPresetsAction) {
 async function getAllPresets() {
     return await axios.get(`${apiUrl}/presets`);
 }
-
-// async function getAllSessions() {
-//     return await axios.get(`${apiUrl}/sessions`)
-// }
 
 export function* addPreset(action: IAddNewPresetAction) {    
     try {
@@ -71,8 +67,8 @@ function handleError(error: any){
 }
 
 export default function* updatesHandlerSaga() {
-    yield takeEvery(ACTION_SUBMIT, submitUpdate);
-    yield takeLatest(ACTION_GET_PRESETS, getPresets);
-    yield takeLatest(ACTION_DELETE_PRESET, deletePreset);
-    yield takeLatest(ACTION_ADD_PRESET, addPreset); 
+    yield takeEvery(ActionType.ACTION_SUBMIT, submitUpdate);
+    yield takeLatest(ActionType.ACTION_GET_PRESETS, getPresets);
+    yield takeLatest(ActionType.ACTION_DELETE_PRESET, deletePreset);
+    yield takeLatest(ActionType.ACTION_ADD_PRESET, addPreset); 
 }

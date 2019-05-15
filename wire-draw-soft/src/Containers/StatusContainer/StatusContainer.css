@@ -1,0 +1,14 @@
+.status-spinner {
+    position: relative;
+    width: 120px;
+    float: right;
+}
+
+.state-row {
+    display: flex;
+    align-items: center;
+}
+
+.state-row-label {
+    margin-right: 5px;
+}
