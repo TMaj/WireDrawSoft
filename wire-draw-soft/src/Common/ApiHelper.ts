@@ -13,3 +13,8 @@ export const getStatistics = async (begin: string, end: string) => {
     return result.data; 
 };
 
+export const getSettings = async () => {
+    const result = await  axios.get(`${apiUri}/settings`);
+    return result.data;
+}
+

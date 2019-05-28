@@ -55,7 +55,7 @@ export class MyWebSocket {
             return;
         } 
         
-        MyWebSocket.websocket = new WebSocket('ws://192.168.0.101:8080');
+        MyWebSocket.websocket = new WebSocket('ws://127.0.0.1:8080');
         MyWebSocket.websocket.onmessage = this.onMessage;
         MyWebSocket.websocket.onerror = this.onError;
         MyWebSocket.websocket.onopen = this.onOpen; 

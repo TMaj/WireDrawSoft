@@ -5,7 +5,23 @@
     width: 100%;
 }
 
-/* .settings-panel {
+.settings-panel {
     display: flex;
-    flex-direction: rows;
-} */
+    width: 40%;
+    flex-direction: column;
+}
+
+.settings-panel-container {
+    display: flex; 
+}
+
+.settings-row .label {
+    width: 40%;
+}
+
+.settings-authors-info {
+    text-align: center;
+    position: relative;
+    float: right;
+}
+

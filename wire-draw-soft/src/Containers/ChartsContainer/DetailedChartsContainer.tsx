@@ -1,43 +1,57 @@
 
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Brush, CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
-import { getAllSessions, getStatistics } from 'src/Common/ApiHelper';
-import { ISession } from 'src/Common/Interfaces';
+import { Dispatch } from 'redux';
+import { GetAllSessions, GetStatistics } from 'src/Common/Actions';
+import { ISession, IState, IStatistics } from 'src/Common/Interfaces';
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';
 import { EntriesPanel, IComlumnInfo } from 'src/Components/EntriesPanelComponent/EntriesPanelComponent';
 import './ChartsContainer.css';
  
-export interface IDetailedChartsContainerProps{
+export interface IDetailedChartsContainerOwnProps {
     dd?: number;
 }
 
-export interface IDetailedChartsContainerState {
-    selectedEntry: number;
+export interface IDetailedChartsContainerStoreProps {
     sessions: ISession[];
-    chartData: any;
+    statistics: IStatistics[];
+}
+
+export interface IDetailedChartsContainerDispatchProps {
+    getSessions: () => void;
+    getStatistics: (payload: {start: any, end: any}) => void;
+}
+
+export interface IDetailedChartsContainerProps extends IDetailedChartsContainerOwnProps, IDetailedChartsContainerStoreProps, IDetailedChartsContainerDispatchProps {}
+
+export interface IDetailedChartsContainerState {
+    selectedEntry: number; 
     loadingData: boolean;
 }
 
-export default class DetailedChartsContainer extends React.Component<IDetailedChartsContainerProps, IDetailedChartsContainerState> {
+export class DetailedChartsContainer extends React.Component<IDetailedChartsContainerProps, IDetailedChartsContainerState> {
     constructor(props: any) {
         super(props);
 
-        this.state = { 
-            chartData: [],  
+        this.state = {  
             loadingData: false,
-            selectedEntry: -1,
-            sessions: [],       
+            selectedEntry: -1,   
         }; 
 
         this.onSelected = this.onSelected.bind(this);
         this.exportData = this.exportData.bind(this);
+    } 
+
+    public async componentDidMount() {  
+        this.props.getSessions(); 
     }
 
-    public async componentDidMount() {
-        const allSessions = await getAllSessions();
-        const parsedSessions = this.parseSessions(allSessions);
-        this.setState({sessions: parsedSessions});
-    }
+    public componentDidUpdate(prevProps: IDetailedChartsContainerProps) { 
+        if (this.props.statistics !== prevProps.statistics) {
+          this.setState({loadingData: false});
+        }
+      }
  
     public render() {
         
@@ -54,17 +68,19 @@ export default class DetailedChartsContainer extends React.Component<IDetailedCh
                 columnName: "End",
                 propertyName: "endFormatted",
             } 
-        ]  
+        ];
+
+        const sessions = this.parseSessions(this.props.sessions);
 
         return (
         <div className='modal-container'>
             <div className={'sessions-panel'}>   
             {
-                this.state.sessions ? 
+                this.props.sessions ? 
                 <EntriesPanel
                     columnInfo={infoArray}
                     editable={false}
-                    entries={this.state.sessions}
+                    entries={sessions}
                     selectedIndex={this.state.selectedEntry}
                     onSelectEntry={this.onSelected}
                 />
@@ -77,7 +93,7 @@ export default class DetailedChartsContainer extends React.Component<IDetailedCh
                 'Loading data'
                 : 
                 <div>
-                <LineChart width={900} height={400} data={this.state.chartData}>
+                <LineChart width={900} height={400} data={this.props.statistics}>
                         <Legend verticalAlign="top" height={36}/>
                         <Line type="linear" dataKey="speed1" stroke="#00FF00" strokeWidth={2} isAnimationActive={true} dot={false} />
                         <Line type="linear" dataKey="speed2" stroke="#0000FF" strokeWidth={2} isAnimationActive={true} dot={false} />
@@ -86,7 +102,7 @@ export default class DetailedChartsContainer extends React.Component<IDetailedCh
                         <Brush dataKey="time" height={30} stroke="#8884d8" />
                         <YAxis />
                 </LineChart>
-                <LineChart width={900} height={400} data={this.state.chartData}>
+                <LineChart width={900} height={400} data={this.props.statistics}>
                         <Legend verticalAlign="top" height={36}/>
                         <Line type="linear" dataKey="temperature" stroke="#FF0000" strokeWidth={2} isAnimationActive={true} dot={false} />
                         <CartesianGrid stroke="#ccc" />
@@ -116,26 +132,24 @@ export default class DetailedChartsContainer extends React.Component<IDetailedCh
 
     private onSelected = (selected: any) => {
         this.setState({selectedEntry: selected}, async () => {
-            this.setState({loadingData: true});
+            this.setState({loadingData: true}); 
 
-            const statistics = await getStatistics(
-                this.state.sessions[this.state.selectedEntry].start,
-                this.state.sessions[this.state.selectedEntry].end
-            );
-            this.setState({loadingData: false}); 
-            this.setState({chartData: statistics});
+            this.props.getStatistics({
+                end: this.props.sessions[this.state.selectedEntry].end,
+                start: this.props.sessions[this.state.selectedEntry].start,
+            }); 
         });
     };
 
     private exportData = () => { 
         const FileSaver = require('file-saver');
-        const blob = new Blob(this.parseStatisticsToStringArray(this.state.chartData), {type: "text/plain;charset=utf-8"});
-        FileSaver.saveAs(blob, `WireDraw_${this.state.sessions[this.state.selectedEntry].date + '_' +
-            this.state.sessions[this.state.selectedEntry].start}.txt`)
+        const blob = new Blob(this.parseStatisticsToStringArray(this.props.statistics), {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, `WireDraw_${this.props.sessions[this.state.selectedEntry].date + '_' +
+            this.props.sessions[this.state.selectedEntry].start}.txt`)
     }
 
     private parseStatisticsToStringArray = (data: any): string[] => {
-        return this.state.chartData.map((entry: any) => {
+        return this.props.statistics.map((entry: any) => {
             return entry.time + " " +
             entry.speed1 + " " +
             entry.speed2 + " " +
@@ -143,3 +157,19 @@ export default class DetailedChartsContainer extends React.Component<IDetailedCh
         });
     }
 }
+
+const mapStateToProps = (state: IState) : IDetailedChartsContainerStoreProps => {
+    return {
+        sessions: state.sessions,
+        statistics: state.statistics,
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): IDetailedChartsContainerDispatchProps => {
+    return { 
+        getSessions: () => dispatch(GetAllSessions()),
+        getStatistics: (payload: {start: any, end: any}) => dispatch(GetStatistics(payload)),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailedChartsContainer);

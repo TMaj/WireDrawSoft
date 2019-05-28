@@ -1,6 +1,16 @@
-import { IPreset, IState } from 'src/Common/Interfaces';
+import { IPreset, ISession, ISettings, IState, IStatistics } from 'src/Common/Interfaces';
 import { IAction } from './Actions';
-import { ActionType } from './Constans';
+import { ActionType } from './Constans'; 
+
+const defaultSettings = (): ISettings => {
+  return {  
+      apiUrl: "http://localhost:8001",
+      reconnectionPeriod: "3",
+      serverUrl: "ws://192.168.0.101:8080",  
+      units: "rpm",
+      videoUrl: "http://live.uci.agh.edu.pl/video/stream1.cgi", 
+  }
+}
 
 const initialState = {
     connectionsStatus: {
@@ -11,7 +21,10 @@ const initialState = {
     presets: [] as IPreset[],    
     presetsLoading: false,  
     presetsState: {},
-} as IState;
+    sessions: [] as ISession[],
+    settings: defaultSettings(),
+    statistics: [] as IStatistics[],
+} as IState; 
 
 export const reducer = (state = initialState, action: IAction): IState => {
     switch (action.type) {
@@ -88,6 +101,21 @@ export const reducer = (state = initialState, action: IAction): IState => {
           connectionsStatus: action.payload
         };
       }
+      case ActionType.ACTION_GET_ALL_SESSIONS_SUCCESS: {
+        return { ...state,
+          sessions: action.payload,          
+        }
+      }
+      case ActionType.ACTION_GET_STATISTICS_SUCCESS: {
+        return { ...state,
+          statistics: action.payload,          
+        }
+      }
+      case ActionType.ACTION_GET_SETTINGS_SUCCESS: {
+        return { ...state,
+          settings: action.payload,          
+        }
+      } 
         
     default: {
       return state

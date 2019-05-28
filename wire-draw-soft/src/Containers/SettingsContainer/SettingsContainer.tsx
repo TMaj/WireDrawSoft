@@ -7,7 +7,7 @@ import { IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';
 import { IconType } from 'src/Resources/SVG';
 import './SettingsContainer.css';  
-import { SettingsPanel } from './SettingsPanel';
+import SettingsPanel   from './SettingsPanel';
 
 interface ISettingsContainerStoreProps {
     currentState: IProcessState,

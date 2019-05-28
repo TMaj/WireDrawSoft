@@ -1,4 +1,4 @@
-import { IConnectionsStatus, IPreset, IProcessState } from '../Common/Interfaces';
+import { IConnectionsStatus, IPreset, IProcessState, ISession, ISettings } from '../Common/Interfaces'; 
 
 import { ActionType } from "./Constans";
 
@@ -134,4 +134,85 @@ export const UpdateConnectionsState = (update: IConnectionsStatus): IConnections
         payload: update,
         type: ActionType.ACTION_UPDATE_CONNECTIONS_STATE     
     };
+}
+
+export interface IGetAllSessionsRequestAction {
+    type: string;
+}
+
+export const GetAllSessions = (): IGetAllSessionsRequestAction => {
+    return {
+        type: ActionType.ACTION_GET_ALL_SESSIONS, 
+    }; 
+}
+
+export interface IGetAllSessionsSuccessAction {
+    type: string;
+    payload: ISession[],
+} 
+
+export const GetAllSessionsSuccess = (payload: ISession[]): IGetAllSessionsSuccessAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_GET_ALL_SESSIONS_SUCCESS,
+    }; 
+}
+
+export interface IGetStatisticsRequestAction {
+    type: string;
+    payload: {start: any, end: any}
+}
+
+export const GetStatistics = (payload: {start: any, end: any}): IGetStatisticsRequestAction => {
+    return {  
+        payload,
+        type: ActionType.ACTION_GET_STATISTICS, 
+    }; 
+}
+
+export interface IGetStatisticsSuccessAction {
+    type: string;
+    payload: ISession[],
+} 
+
+export const GetStatisticsSuccess = (payload: ISession[]): IGetStatisticsSuccessAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_GET_STATISTICS_SUCCESS,
+    }; 
+}
+
+
+export interface IGetSettingsRequestAction {
+    type: string;
+}
+
+export const GetSettings = (): IGetSettingsRequestAction => {
+    return {
+        type: ActionType.ACTION_GET_SETTINGS, 
+    }; 
+}
+
+export interface IGetSettingsSuccessAction {
+    type: string;
+    payload: ISettings,
+} 
+
+export const GetSettingsSuccess = (payload: ISettings): IGetSettingsSuccessAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_GET_SETTINGS_SUCCESS
+    }; 
+} 
+
+export interface ISubmitSettingsAction {
+    type: string;
+    payload: {settings: ISettings}
+}
+
+export const SubmitSettings = (payload: {settings: ISettings}): ISubmitSettingsAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_SUBMIT_SETTINGS, 
+    }; 
 }
