@@ -16,7 +16,7 @@ class App extends React.Component<IAppProps> {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Wire Draw Soft</h1>
-          <h1 className="App-title">Speed 1: {this.props.currentState.speed1} Speed 2: {this.props.currentState.speed2} Temp: {this.props.currentState.temperature}</h1>
+          <h1 className="App-title">Speed 1: {this.props.currentState.engine1Speed} Speed 2: {this.props.currentState.engine2Speed} Temp: {this.props.currentState.currentTemperature}</h1>
         </header>
       </div>
     );

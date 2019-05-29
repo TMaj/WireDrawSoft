@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { MyWebSocket } from '../../WebSocket/WebSocket'
 
 import { UpdateConnectionsState, UpdateStore } from 'src/Common/Actions';
-import { IConnectionsStatus, IProcessState } from 'src/Common/Interfaces';
+import { IConnectionsStatus, IHardwareState, IProcessState } from 'src/Common/Interfaces';
 import { parseFromString } from 'src/Common/Parser';
 
 interface IUpdatesHandlerProps {
@@ -37,12 +37,22 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
     }
     
     public async handleMessage(message: any) {
-        const update = await parseFromString(message.data) as IProcessState;
+        const parsedMsg = await parseFromString(message.data); 
 
-        // tslint:disable-next-line:no-console
-        console.log(`UpdatesHandler :: Update received, Values: ${update.speed1} ${update.speed2} ${update.temperature} `);
+        if (parsedMsg.type === 'update') {
+            const update = parsedMsg.body as IProcessState; 
+            this.props.updateStore(update);
+           
+            // tslint:disable-next-line:no-console
+            console.log(`UpdatesHandler :: Update received, Values: ${update.engine1Speed} ${update.engine2Speed} ${update.currentTemperature} `);
+        } 
 
-        this.props.updateStore(update);
+        if (parsedMsg.type ==='status') {
+            const state = parsedMsg.body as IHardwareState;
+            // tslint:disable-next-line:no-console
+            console.log(`UpdatesHandler :: Status received: connected to server true connectedToEngines ${state.connectedToEngines} `);
+            this.props.updateConnectionsStatus({connectedToServer: true, connectedToEngines: state.connectedToEngines});  
+        }  
     }    
 
     public async handleError(error: any) {
@@ -50,14 +60,14 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
         console.log('UpdatesHandler :: Error occured during websocket connection'); 
 
         this.setState({connected: false});
-        this.props.updateConnectionsStatus({connectedToServer: false}); 
+        this.props.updateConnectionsStatus({connectedToServer: false, connectedToEngines: false}); 
     };
 
     public async handleConnection() {
         // tslint:disable-next-line:no-console
         console.log('UpdatesHandler :: Connected to websocket server'); 
         
-        this.props.updateConnectionsStatus({connectedToServer: true});
+        this.props.updateConnectionsStatus({connectedToServer: true, connectedToEngines: false});
 
         this.setState({connected: true})
     };  
@@ -70,7 +80,7 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
     }  
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({ 
+const mapDispatchToProps = (dispatch: Dispatch) => ({  
     updateConnectionsStatus: (status: IConnectionsStatus) => dispatch(UpdateConnectionsState(status)),
     updateStore: (update: IProcessState) => dispatch(UpdateStore(update)),
 })

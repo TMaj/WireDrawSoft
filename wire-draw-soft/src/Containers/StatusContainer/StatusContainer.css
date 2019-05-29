@@ -5,10 +5,15 @@
 }
 
 .state-row {
-    display: flex;
+    display: flex; 
     align-items: center;
+    margin: 5px;
 }
 
 .state-row-label {
     margin-right: 5px;
+}
+
+.state-row-toggle{ 
+    margin: 5px;
 }

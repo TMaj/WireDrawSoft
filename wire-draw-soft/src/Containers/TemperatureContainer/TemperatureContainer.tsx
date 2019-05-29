@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import Thermometer from 'react-thermometer-component'
 import { Dispatch } from 'redux';
 import { SubmitUpdate, UpdateTempInputValue } from 'src/Common/Actions';
-import { IProcessState, IState } from "src/Common/Interfaces";
+import { IConnectionsStatus, IProcessState, IState } from "src/Common/Interfaces";
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
 import './TemperatureContainer.css'
 
 interface ITemperatureContainerStoreProps {
-    currentState: IProcessState
+    currentState: IProcessState,
+    connectionsStatus: IConnectionsStatus
 }
 
 interface ITemperatureContainerDispatchProps {
@@ -48,18 +49,21 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
 
     public async sendMessage(event: React.FormEvent<HTMLFormElement>) {
         const update = Object.assign({}, this.props.currentState );
-        update.temperature =  this.state.temperatureInputValue; 
+        update.currentTemperature =  this.state.temperatureInputValue; 
 
         this.props.submitUpdate(update);
         event.preventDefault();
     }
 
     public render() {
+        const enabled = this.props.connectionsStatus.connectedToEngines && this.props.connectionsStatus.connectedToServer;
+        const containerClass = enabled ? 'temperature-container' : 'temperature-container disabled';
+
         return(
-            <div className='temperature-container'>
+            <div className={containerClass}>
                     <Thermometer
                     theme="light"
-                    value={this.props.currentState.temperature}
+                    value={this.props.currentState.currentTemperature}
                     max="200"
                     steps="1"
                     format="°C"
@@ -68,14 +72,14 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
                     />
                 <div className='temperature-form-container'>
                     <div className='temperature-label'> Current temperature:
-                        <span className='temperature-value'> {this.props.currentState.temperature} </span> 
+                        <span className='temperature-value'> {this.props.currentState.currentTemperature} </span>  °C
                     </div>
                     <form onSubmit={this.sendMessage}>
                         <label>
                             Desired temperature:
                         </label>
-                        <NumberInputComponent step={0.1} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={200} min ={0}/>                    
-                        <CustomSubmitComponent value="Submit" />
+                        <NumberInputComponent disabled={!enabled} step={0.1} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={200} min ={0}/>                    
+                        <CustomSubmitComponent disabled={!enabled}  value="Submit" />
                     </form>                        
                 </div>
             </div>
@@ -91,6 +95,7 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
 
 const mapStateToProps = (state: IState) : ITemperatureContainerStoreProps => {
     return {
+        connectionsStatus: state.connectionsStatus,
         currentState: state.currentState
     }
 }

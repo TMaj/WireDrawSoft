@@ -56,10 +56,10 @@ class SettingsContainer extends React.Component<ISettingsContainerProps, ISettin
     }
 
     private onResetAllButtonClick = () => {
-        this.props.submitUpdate( {
-            speed1: 0,
-            speed2: 0,
-            temperature: 0
+        this.props.submitUpdate( { 
+            currentTemperature: 0,
+            engine1Speed: 0,
+            engine2Speed: 0,
         } as IProcessState );
     }
 

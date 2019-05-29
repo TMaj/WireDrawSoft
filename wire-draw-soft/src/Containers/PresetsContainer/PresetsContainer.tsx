@@ -96,9 +96,9 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
     private onAddClick() {
         const newPreset = {                           
             name: this.state.presetNameInputValue || 'Default preset name',
-            speed1: this.props.inputsState.speed1,
-            speed2: this.props.inputsState.speed2,
-            temperature: this.props.inputsState.temperature
+            speed1: this.props.inputsState.engine1Speed,
+            speed2: this.props.inputsState.engine2Speed,
+            temperature: this.props.inputsState.currentTemperature
         } as IPreset;
 
         this.props.addNewPreset(newPreset);
@@ -128,8 +128,14 @@ class PresetsContainer extends React.Component<IPresetsContainerProps, IProcessC
         this.setState({addPresetFormVisible: true, addPresetButtonDisabled: true});
     }
 
-    private onSubmitPresetButtonClick() {        
-        this.props.submitUpdate(this.props.presets[this.state.selectedPresetIndex] as IProcessState)
+    private onSubmitPresetButtonClick() {
+        const preset = this.props.presets[this.state.selectedPresetIndex];
+        const update = {
+            desiredTemperature: preset.temperature,
+            engine1Speed: preset.speed1,
+            engine2Speed: preset.speed2,
+        } as IProcessState;     
+        this.props.submitUpdate(update)
     }
 
     private onEntrySelected(index: number) {

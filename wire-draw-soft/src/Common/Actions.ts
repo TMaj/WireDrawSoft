@@ -216,3 +216,15 @@ export const SubmitSettings = (payload: {settings: ISettings}): ISubmitSettingsA
         type: ActionType.ACTION_SUBMIT_SETTINGS, 
     }; 
 }
+
+export interface IChangeConnectionToHardwareAction {
+    type: string;
+    payload: boolean;
+}
+
+export const ChangeConnectionToHardware = (payload: boolean): IChangeConnectionToHardwareAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_CHANGE_HARDWARE_CONNECTION, 
+    }; 
+}

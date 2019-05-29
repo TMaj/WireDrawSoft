@@ -6,7 +6,25 @@ import { parseToString } from './Parser';
 const apiUrl = 'http://localhost:8001'; 
 
 export async function sendUpdate(update: IProcessState) {
+    // tslint:disable-next-line:no-console
+    console.log('Sending update');
+   
     const message = await parseToString(update) as string;
+     // tslint:disable-next-line:no-console
+     console.log(message);
+    MyWebSocket.websocket.send(message);
+}
+
+export async function sendCommand(connectionStatus: boolean) {
+    // tslint:disable-next-line:no-console
+    console.log('Sending hardware connection request');
+    
+    const command = connectionStatus ? "connect" : "disconnect";
+
+    const message = JSON.stringify({
+        command,
+        type: "command"        
+    });
     MyWebSocket.websocket.send(message);
 }
  

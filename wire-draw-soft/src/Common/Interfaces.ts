@@ -1,11 +1,24 @@
- export interface IProcessState {
-    speed1: number;
-    speed2: number;
-    temperature: number;
+ export interface IProcessState { 
+    engine1Speed: number;
+    engine1Direction: EngineDirection;
+    engine2Speed: number;
+    engine2Direction: EngineDirection;
+    currentTemperature?: number;
+    desiredTemperature: number;
+}
+
+export enum EngineDirection {
+    Left = 0,
+    Right = 1,
 }
 
 export interface IConnectionsStatus {
     connectedToServer: boolean;
+    connectedToEngines: boolean;
+}
+
+export interface IHardwareState {
+    connectedToEngines: boolean;
 }
 
 export interface ISettings {

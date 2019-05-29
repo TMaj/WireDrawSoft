@@ -14,6 +14,7 @@ const defaultSettings = (): ISettings => {
 
 const initialState = {
     connectionsStatus: {
+      connectedToEngines: false,
       connectedToServer: false,
     },
     currentState : {},
@@ -40,19 +41,19 @@ export const reducer = (state = initialState, action: IAction): IState => {
       case ActionType.ACTION_UPDATE_INPUT_SPEED_1: {
         return { 
           ...state,
-          inputsState: { ...state.inputsState, speed1: action.payload }
+          inputsState: { ...state.inputsState, engine1Speed: action.payload }
         };
       }
       case ActionType.ACTION_UPDATE_INPUT_SPEED_2: {
         return { 
           ...state,
-          inputsState: { ...state.inputsState, speed2: action.payload }
+          inputsState: { ...state.inputsState, engine2Speed: action.payload }
         };
       }
       case ActionType.ACTION_UPDATE_INPUT_TEMP: {
         return { 
           ...state,
-          inputsState: { ...state.inputsState, temperature: action.payload }
+          inputsState: { ...state.inputsState, currentTemperature: action.payload }
         };
       }
       case ActionType.ACTION_UPDATE_PRESET_STATE: {

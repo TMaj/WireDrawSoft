@@ -2,11 +2,12 @@ import * as React from 'react';
 import './CustomSubmitComponent.css'
 
 export interface ICustomSubmitProps {
-    value: string
+    value: string,
+    disabled?: boolean,
 }
 
 export const CustomSubmitComponent = (props: ICustomSubmitProps) => {
     return (
-        <input className="customSubmit" type="submit" value={props.value}/>
+        <input disabled={props.disabled} className="customSubmit" type="submit" value={props.value}/>
     );
 }

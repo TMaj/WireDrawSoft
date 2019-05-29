@@ -1,10 +1,11 @@
 import { call, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
 import { AddNewPresetSuccess, DeletePresetSuccess, GetAllPresetsSuccess,
      GetAllSessionsSuccess, GetSettingsSuccess, GetStatisticsSuccess, IAddNewPresetAction,
-      IDeletePresetAction, IGetAllSessionsRequestAction, IGetSettingsRequestAction, 
-      IGetStatisticsRequestAction, IStateUpdateAction, ISubmitSettingsAction } from './Actions';
+      IChangeConnectionToHardwareAction, IDeletePresetAction, IGetAllSessionsRequestAction, 
+      IGetSettingsRequestAction, IGetStatisticsRequestAction, IStateUpdateAction, ISubmitSettingsAction } from './Actions';
 import { ActionType } from './Constans';
-import { deletePresetById, getAllPresets, getSessions, getSettings, getStatisticsBetween, handleError, postNewPreset, postSettings, sendUpdate } from './SagasHelpers';
+import { deletePresetById, getAllPresets, getSessions, getSettings, 
+    getStatisticsBetween, handleError, postNewPreset, postSettings, sendCommand, sendUpdate } from './SagasHelpers';
 
 
 export function* submitUpdate(action: IStateUpdateAction) {
@@ -85,6 +86,14 @@ export function* submitSettings(action: ISubmitSettingsAction) {
     }
 }  
 
+export function* changeHardwareConnection(action: IChangeConnectionToHardwareAction) { 
+    try {
+        yield call(sendCommand, action.payload); 
+    } catch(error) {
+        handleError(error);
+    }
+} 
+
 export default function* updatesHandlerSaga() {
     yield takeEvery(ActionType.ACTION_SUBMIT, submitUpdate);
     yield takeLatest(ActionType.ACTION_GET_PRESETS, getPresets);
@@ -94,4 +103,5 @@ export default function* updatesHandlerSaga() {
     yield takeLatest(ActionType.ACTION_GET_STATISTICS, getStatistics);
     yield takeLatest(ActionType.ACTION_GET_SETTINGS, getSettings);
     yield takeLatest(ActionType.ACTION_SUBMIT_SETTINGS, submitSettings);
+    yield takeLatest(ActionType.ACTION_CHANGE_HARDWARE_CONNECTION, changeHardwareConnection);
 }

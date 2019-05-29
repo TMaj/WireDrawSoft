@@ -49,9 +49,9 @@ class ChartsContainer extends React.Component<IChartsContainerStoreProps, IChart
             }
             
             const newRecord = {
-                engineOneSpeed: this.props.currentState.speed1,
-                engineTwoSpeed: this.props.currentState.speed2,
-                temperature: this.props.currentState.temperature,
+                engineOneSpeed: this.props.currentState.engine1Speed,
+                engineTwoSpeed: this.props.currentState.engine2Speed,
+                temperature: this.props.currentState.currentTemperature,
                 time: new Date().toLocaleTimeString(),
             } as IStateStatistics;
 

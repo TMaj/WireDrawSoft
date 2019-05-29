@@ -95,8 +95,8 @@ export class DetailedChartsContainer extends React.Component<IDetailedChartsCont
                 <div>
                 <LineChart width={900} height={400} data={this.props.statistics}>
                         <Legend verticalAlign="top" height={36}/>
-                        <Line type="linear" dataKey="speed1" stroke="#00FF00" strokeWidth={2} isAnimationActive={true} dot={false} />
-                        <Line type="linear" dataKey="speed2" stroke="#0000FF" strokeWidth={2} isAnimationActive={true} dot={false} />
+                        <Line type="linear" dataKey="engine1Speed" stroke="#00FF00" strokeWidth={2} isAnimationActive={true} dot={false} />
+                        <Line type="linear" dataKey="engine2Speed" stroke="#0000FF" strokeWidth={2} isAnimationActive={true} dot={false} />
                         <CartesianGrid stroke="#ccc" />
                         <XAxis dataKey="time" />
                         <Brush dataKey="time" height={30} stroke="#8884d8" />
@@ -104,7 +104,7 @@ export class DetailedChartsContainer extends React.Component<IDetailedChartsCont
                 </LineChart>
                 <LineChart width={900} height={400} data={this.props.statistics}>
                         <Legend verticalAlign="top" height={36}/>
-                        <Line type="linear" dataKey="temperature" stroke="#FF0000" strokeWidth={2} isAnimationActive={true} dot={false} />
+                        <Line type="linear" dataKey="currentTemperature" stroke="#FF0000" strokeWidth={2} isAnimationActive={true} dot={false} />
                         <CartesianGrid stroke="#ccc" />
                         <XAxis dataKey="time" />
                         <Brush dataKey="time" height={30} stroke="#8884d8" />

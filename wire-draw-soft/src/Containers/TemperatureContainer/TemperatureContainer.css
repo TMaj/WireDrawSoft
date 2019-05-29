@@ -19,3 +19,7 @@
     font-weight: bold;
     font-size: 40px;
   }
+
+  .disabled {
+    color: #9c475f;
+  }
