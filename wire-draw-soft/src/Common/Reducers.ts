@@ -15,6 +15,7 @@ const defaultSettings = (): ISettings => {
 const initialState = {
     connectionsStatus: {
       connectedToEngines: false,
+      connectedToHardwareController: false,
       connectedToServer: false,
     },
     currentState : {},

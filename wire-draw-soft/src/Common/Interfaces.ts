@@ -15,10 +15,12 @@ export enum EngineDirection {
 export interface IConnectionsStatus {
     connectedToServer: boolean;
     connectedToEngines: boolean;
+    connectedToHardwareController: boolean;
 }
 
 export interface IHardwareState {
-    connectedToEngines: boolean;
+    connectedToEngines: boolean; 
+    connectedToHardwareController: boolean;
 }
 
 export interface ISettings {

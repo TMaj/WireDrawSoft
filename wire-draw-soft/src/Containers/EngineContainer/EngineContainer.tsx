@@ -69,11 +69,13 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
     }   
     
     public render() {        
-        const currentSpeed = this.props.currentState[`engine${this.props.engineNumber}Speed`];
+        const currentSpeed = this.props.currentState[`engine${this.props.engineNumber}Speed`]; 
         const currentDirection = this.props.currentState[`engine${this.props.engineNumber}Direction`];
         const enabled = this.props.connectionsStatus.connectedToEngines && this.props.connectionsStatus.connectedToServer;
         const containerClass = enabled ? 'engine-container' : 'engine-container disabled';
-        const wheelStyle = enabled ? {animation: 'engine-wheel-spin infinite '+ 100/currentSpeed +'s linear'} : {animation: 'engine-wheel-spin infinite 0s linear'};
+        // tslint:disable-next-line:triple-equals
+        const wheelAnimation = currentDirection == "1" ? 'engine-clockwise-wheel-spin' : 'engine-anticlockwise-wheel-spin'; 
+        const wheelStyle = enabled && currentSpeed > 0 ? {animation: wheelAnimation + ' infinite '+ 1000 / currentSpeed + 's linear'} : {animation: ''};
         
         return (         
             <div className={containerClass}>
@@ -91,7 +93,7 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
                                 <label>
                                     Desired speed of engine {this.props.engineNumber}:
                                 </label>
-                                <NumberInputComponent disabled={!enabled} step={0.01} value={this.state.speedInputValue} onChange={this.handleStateInputChange} max={200} min={0}/> 
+                                <NumberInputComponent disabled={!enabled} step={0.01} value={this.state.speedInputValue} onChange={this.handleStateInputChange} max={1000} min={0}/> 
                             </div>
                             <div className='form-input'> 
                                 <label>

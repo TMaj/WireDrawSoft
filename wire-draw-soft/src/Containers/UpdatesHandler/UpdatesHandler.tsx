@@ -51,7 +51,11 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
             const state = parsedMsg.body as IHardwareState;
             // tslint:disable-next-line:no-console
             console.log(`UpdatesHandler :: Status received: connected to server true connectedToEngines ${state.connectedToEngines} `);
-            this.props.updateConnectionsStatus({connectedToServer: true, connectedToEngines: state.connectedToEngines});  
+            this.props.updateConnectionsStatus({
+                connectedToEngines: state.connectedToEngines, 
+                connectedToHardwareController: state.connectedToHardwareController,
+                connectedToServer: true, 
+            });  
         }  
     }    
 
@@ -60,14 +64,22 @@ class UpdatesHandler extends React.Component<IUpdatesHandlerProps, IUpdatesHandl
         console.log('UpdatesHandler :: Error occured during websocket connection'); 
 
         this.setState({connected: false});
-        this.props.updateConnectionsStatus({connectedToServer: false, connectedToEngines: false}); 
+        this.props.updateConnectionsStatus({
+            connectedToEngines: false,
+            connectedToHardwareController: false, 
+            connectedToServer: false,
+        }); 
     };
 
     public async handleConnection() {
         // tslint:disable-next-line:no-console
         console.log('UpdatesHandler :: Connected to websocket server'); 
         
-        this.props.updateConnectionsStatus({connectedToServer: true, connectedToEngines: false});
+        this.props.updateConnectionsStatus({
+            connectedToEngines: false,
+            connectedToHardwareController: false, 
+            connectedToServer: true, 
+        });
 
         this.setState({connected: true})
     };  

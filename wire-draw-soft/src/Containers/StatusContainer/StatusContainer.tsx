@@ -25,7 +25,7 @@ class StatusContainer extends React.Component<IStatusContainerProps> {
     }   
 
     public render() {
-        const { connectedToServer, connectedToEngines } = this.props.connectionsStatus;
+        const { connectedToServer, connectedToEngines, connectedToHardwareController } = this.props.connectionsStatus;
 
         return (
             <div className='status-container '>
@@ -35,12 +35,16 @@ class StatusContainer extends React.Component<IStatusContainerProps> {
                 <div className='state-row'>
                     <div className='state-row-label'> CURRENT SERVER STATUS: {connectedToServer ? 'CONNECTED' : 'DISCONNECTED'} </div>
                     <div className='state-row-toggle'> <ToggleComponent state={connectedToServer}/> </div>
+                </div>  
+                <div className='state-row'>
+                    <div className='state-row-label'> CURRENT HARDWARE CONTROLLER STATUS: {connectedToHardwareController ? 'CONNECTED' : 'DISCONNECTED'} </div>
+                    <div className='state-row-toggle'> <ToggleComponent state={connectedToHardwareController}/> </div> 
                 </div>
                 <div className='state-row'>
                     <div className='state-row-label'> CURRENT ENGINES STATUS: {connectedToEngines ? 'CONNECTED' : 'DISCONNECTED'} </div>
                     <div className='state-row-toggle'> <ToggleComponent state={connectedToEngines}/> </div>
-                    <CustomButtonComponent onClick={this.handleConnectionButtonClick} content={connectedToEngines? 'Disconnect' : 'Connect'}/>
-                </div>
+                    <CustomButtonComponent disabled={!connectedToHardwareController} onClick={this.handleConnectionButtonClick} content={connectedToEngines? 'Disconnect' : 'Connect'}/>
+                </div> 
             </div>
         );
     }
