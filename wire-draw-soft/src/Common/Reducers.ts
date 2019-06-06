@@ -18,7 +18,12 @@ const initialState = {
       connectedToHardwareController: false,
       connectedToServer: false,
     },
-    currentState : {},
+    currentState : {
+      engine1Direction: 0,
+      engine1Speed: 0,
+      engine2Direction: 0,
+      engine2Speed: 0
+    },
     inputsState: {},
     presets: [] as IPreset[],    
     presetsLoading: false,  
@@ -49,6 +54,18 @@ export const reducer = (state = initialState, action: IAction): IState => {
         return { 
           ...state,
           inputsState: { ...state.inputsState, engine2Speed: action.payload }
+        };
+      }
+      case ActionType.ACTION_UPDATE_DIRECTION_INPUT_1: {
+        return { 
+          ...state,
+          inputsState: { ...state.inputsState, engine1Direction: action.payload }
+        };
+      }
+      case ActionType.ACTION_UPDATE_DIRECTION_INPUT_2: {
+        return { 
+          ...state,
+          inputsState: { ...state.inputsState, engine2Direction: action.payload }
         };
       }
       case ActionType.ACTION_UPDATE_INPUT_TEMP: {

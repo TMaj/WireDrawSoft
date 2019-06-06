@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import { SubmitUpdate } from 'src/Common/Actions';
 import { IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomButtonComponent } from 'src/Components/CustomButtonComponent/CustomButtonComponent';
+import { CustomInputComponent } from 'src/Components/CustomInputComponent/CustomInputComponent';
 import { IconType } from 'src/Resources/SVG';
 import './SettingsContainer.css';  
 import SettingsPanel   from './SettingsPanel';
@@ -43,12 +44,24 @@ class SettingsContainer extends React.Component<ISettingsContainerProps, ISettin
             <div className='settings-container'> 
                 <div> <CustomButtonComponent content="Submit all" onClick ={this.onSubmitAllButtonClick}/> </div>
                 <div> <CustomButtonComponent content="Reset all" onClick ={this.onResetAllButtonClick}/> </div>
-                <div> <CustomButtonComponent content="Settings" icon={IconType.Settings} onClick ={this.onSettingsButtonClick}/> </div> 
+                <div> <CustomButtonComponent content="Settings" icon={IconType.Settings} onClick ={this.onSettingsButtonClick}/> </div>   
+                <div className='elongation-settings'> 
+                    <div className={'elongation'}> Elongation factor: x{this.calculateElongation().toPrecision(3)} </div>
+                    Reel diameter [m]: <CustomInputComponent />
+                </div>
+             
+
                 <Modal isOpen={this.state.modalVisible} onRequestClose={this.onSettingsButtonClick}>
                     <SettingsPanel/>
                 </Modal>
             </div>
         );
+    }
+
+    private calculateElongation = () => {
+        const speed1 = parseFloat(this.props.currentState.engine1Speed.toString());
+        const speed2 = parseFloat(this.props.currentState.engine2Speed.toString());
+        return speed1 > speed2 ? (speed1/speed2): (speed2/speed1);
     }
 
     private onSubmitAllButtonClick = () => {

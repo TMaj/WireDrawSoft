@@ -49,22 +49,22 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
 
     public async sendMessage(event: React.FormEvent<HTMLFormElement>) {
         const update = Object.assign({}, this.props.currentState );
-        update.currentTemperature =  this.state.temperatureInputValue; 
+        update.desiredTemperature =  this.state.temperatureInputValue; 
 
         this.props.submitUpdate(update);
         event.preventDefault();
     }
 
     public render() {
-        const enabled = this.props.connectionsStatus.connectedToEngines && this.props.connectionsStatus.connectedToServer;
-        const containerClass = enabled ? 'temperature-container' : 'temperature-container disabled';
+        // const enabled = this.props.connectionsStatus.connectedToEngines && this.props.connectionsStatus.connectedToServer;
+        // const containerClass = enabled ? 'temperature-container' : 'temperature-container disabled';
 
         return(
-            <div className={containerClass}>
+            <div className={'temperature-container'}>
                     <Thermometer
                     theme="light"
                     value={this.props.currentState.currentTemperature}
-                    max="200"
+                    max="500"
                     steps="1"
                     format="°C"
                     size="large"
@@ -78,8 +78,8 @@ class TemperatureContainer extends React.Component<ITemperatureContainerProps, I
                         <label>
                             Desired temperature:
                         </label>
-                        <NumberInputComponent disabled={!enabled} step={0.1} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={200} min ={0}/>                    
-                        <CustomSubmitComponent disabled={!enabled}  value="Submit" />
+                        <NumberInputComponent step={0.1} value={this.state.temperatureInputValue} onChange={this.handleTemperatureInputChange} max={500} min ={0}/>                    
+                        <CustomSubmitComponent  value="Submit" />
                     </form>                        
                 </div>
             </div>

@@ -10,6 +10,6 @@ export const parseFromString  = (update: string): { type: string, body: IProcess
 }
 
 export const parseToString  = (update: IProcessState): string => { 
-    const x = { ...update, type: 'update' }; 
+    const x = { ...update, engine1Speed: update.engine1Speed, engine2Speed: update.engine2Speed, type: 'update' }; 
     return JSON.stringify(x);
 }

@@ -52,6 +52,20 @@ export  const UpdateSpeedInputValue = (inputUpdate: number, engineNumber: number
     };
 }
 
+export interface IDirectionInputUpdateAction {
+    type: string;
+    payload: number,
+}
+
+export  const UpdateDirectionInputValue = (inputUpdate: number, engineNumber: number): IInputUpdateAction => {
+    const actionType = engineNumber === 1 ? ActionType.ACTION_UPDATE_DIRECTION_INPUT_1 : ActionType.ACTION_UPDATE_DIRECTION_INPUT_2;
+
+    return { 
+        payload: inputUpdate,
+        type: actionType,
+    };
+}
+
 export  const UpdateTempInputValue = (inputUpdate: number): IInputUpdateAction => {
     return { 
         payload: inputUpdate,

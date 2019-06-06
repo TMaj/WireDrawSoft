@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { SubmitUpdate, UpdateSpeedInputValue } from 'src/Common/Actions';
+import { SubmitUpdate, UpdateDirectionInputValue, UpdateSpeedInputValue } from 'src/Common/Actions';
 import { EngineDirection, IConnectionsStatus, IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
@@ -18,6 +18,7 @@ interface IEngineContainerStoreProps {
 interface IEngineContainerDispatchProps {
     submitUpdate: (state: IProcessState) => void;
     updateSpeedInput: (speed: number, engineNumber: number) => void;
+    updateDirectionInput: (update: number, engineNumber: number) => void;
 }
 
 type IEngineContainerProps = IEngineContainerOwnProps & IEngineContainerStoreProps & IEngineContainerDispatchProps
@@ -69,23 +70,24 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
     }   
     
     public render() {        
-        const currentSpeed = this.props.currentState[`engine${this.props.engineNumber}Speed`]; 
+        const currentSpeed = this.props.currentState[`engine${this.props.engineNumber}Speed`] 
         const currentDirection = this.props.currentState[`engine${this.props.engineNumber}Direction`];
         const enabled = this.props.connectionsStatus.connectedToEngines && this.props.connectionsStatus.connectedToServer;
         const containerClass = enabled ? 'engine-container' : 'engine-container disabled';
         // tslint:disable-next-line:triple-equals
         const wheelAnimation = currentDirection == "1" ? 'engine-clockwise-wheel-spin' : 'engine-anticlockwise-wheel-spin'; 
-        const wheelStyle = enabled && currentSpeed > 0 ? {animation: wheelAnimation + ' infinite '+ 1000 / currentSpeed + 's linear'} : {animation: ''};
+        const wheelStyle = enabled && currentSpeed > 0 ? {animation: wheelAnimation + ' infinite '+ 60 / currentSpeed + 's linear'} : {animation: ''};
         
         return (         
             <div className={containerClass}>
                 <img className="engine-wheel" src={'img/wheel.png'} style = {wheelStyle} />                
                 <div className='engine-form-container'>
                     <div className='engine-speed-label'> Current speed: 
-                        <span className='engine-speed-value'> {currentSpeed} </span>
+                        <span className='engine-speed-value'> {parseFloat(currentSpeed).toPrecision(3)} rpm </span>
                     </div> 
                     <div className='engine-direction-label'> Current direction: 
-                        <span className='engine-direction-value'> {currentDirection === 0 ? "Left" : "Right"} </span>
+                    {/* tslint:disable-next-line:triple-equals */}
+                        <span className='engine-direction-value'> {currentDirection == 0 ? "Left" : "Right"} </span>
                     </div>                
                     <form onSubmit={this.sendMessage} className='engine-form'> 
                         <div className='form-inputs'>
@@ -99,8 +101,8 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
                                 <label>
                                     Direction of engine {this.props.engineNumber}: {this.state.engineDirection === 0 ? 'Left' : 'Right'}
                                 </label>
-                                <input disabled={!enabled} type="radio" name="direction" value="0" onChange={this.handleDirectionChange}/> Left 
-                                <input disabled={!enabled} type="radio" name="direction" value="1" onChange={this.handleDirectionChange}/> Right 
+                                <input disabled={!enabled} type="radio" name="direction" value={0} onChange={this.handleDirectionChange}/> Left 
+                                <input disabled={!enabled} type="radio" name="direction" value={1} onChange={this.handleDirectionChange}/> Right 
                             </div>
                         </div>
                         <CustomSubmitComponent disabled={!enabled} value="Submit" />
@@ -111,8 +113,10 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
     }
 
     private handleDirectionChange(event: any) {
-        this.setState({engineDirection: event.currentTarget.value});
+        const value = parseInt(event.currentTarget.value, 10);
+        this.setState({engineDirection: value});
         window.localStorage.setItem(this.getDirectionLocalStorageKey(), event.currentTarget.value.toString());
+        this.props.updateDirectionInput(value, this.props.engineNumber);
     }
 
     private getInputLocalStorageKey(): string {
@@ -140,6 +144,7 @@ const mapStateToProps = (state: IState) : IEngineContainerStoreProps => {
 const mapDispatchToProps = (dispatch: Dispatch): IEngineContainerDispatchProps => {
     return { 
         submitUpdate: (update: IProcessState) => dispatch(SubmitUpdate(update)),
+        updateDirectionInput: (update: number, engineNumber: number) => dispatch(UpdateDirectionInputValue(update, engineNumber)),
         updateSpeedInput: (update: number, engineNumber: number) => dispatch(UpdateSpeedInputValue(update, engineNumber))
     };
 }

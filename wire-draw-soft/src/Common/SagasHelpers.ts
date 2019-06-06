@@ -11,7 +11,7 @@ export async function sendUpdate(update: IProcessState) {
    
     const message = await parseToString(update) as string;
      // tslint:disable-next-line:no-console
-     console.log(message);
+     console.log(message); 
     MyWebSocket.websocket.send(message);
 }
 
