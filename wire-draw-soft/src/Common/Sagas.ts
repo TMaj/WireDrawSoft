@@ -2,10 +2,12 @@ import { call, put, takeEvery, takeLatest } from '@redux-saga/core/effects';
 import { AddNewPresetSuccess, DeletePresetSuccess, GetAllPresetsSuccess,
      GetAllSessionsSuccess, GetSettingsSuccess, GetStatisticsSuccess, IAddNewPresetAction,
       IChangeConnectionToHardwareAction, IDeletePresetAction, IGetAllSessionsRequestAction, 
-      IGetSettingsRequestAction, IGetStatisticsRequestAction, IStateUpdateAction, ISubmitSettingsAction } from './Actions';
+      IGetSettingsRequestAction, IGetStatisticsRequestAction, IReelDiameterUpdateAction,
+       IStateUpdateAction, ISubmitAutoProgramAction, ISubmitSettingsAction,  
+       IToggleAutoProgramAction} from './Actions';
 import { ActionType } from './Constans';
 import { deletePresetById, getAllPresets, getSessions, getSettings, 
-    getStatisticsBetween, handleError, postNewPreset, postSettings, sendCommand, sendUpdate } from './SagasHelpers';
+    getStatisticsBetween, handleError, postNewPreset, postSettings, sendAutoProgram, sendCommand, sendReelUpdate, sendUpdate, switchAutoProgram } from './SagasHelpers';
 
 
 export function* submitUpdate(action: IStateUpdateAction) {
@@ -94,6 +96,30 @@ export function* changeHardwareConnection(action: IChangeConnectionToHardwareAct
     }
 } 
 
+export function* submitReelDiameter(action: IReelDiameterUpdateAction) { 
+    try {
+        yield call(sendReelUpdate, action.payload);  
+    } catch(error) {
+        handleError(error);
+    }
+} 
+
+export function* submitAutoProgram(action: ISubmitAutoProgramAction) { 
+    try {
+        yield call(sendAutoProgram, action.payload);  
+    } catch(error) {
+        handleError(error);
+    }
+} 
+
+export function* toggleAutoProgram(action: IToggleAutoProgramAction) { 
+    try {
+        yield call(switchAutoProgram, action.payload);  
+    } catch(error) {
+        handleError(error);
+    }
+} 
+
 export default function* updatesHandlerSaga() {
     yield takeEvery(ActionType.ACTION_SUBMIT, submitUpdate);
     yield takeLatest(ActionType.ACTION_GET_PRESETS, getPresets);
@@ -104,4 +130,7 @@ export default function* updatesHandlerSaga() {
     yield takeLatest(ActionType.ACTION_GET_SETTINGS, getSettings);
     yield takeLatest(ActionType.ACTION_SUBMIT_SETTINGS, submitSettings);
     yield takeLatest(ActionType.ACTION_CHANGE_HARDWARE_CONNECTION, changeHardwareConnection);
+    yield takeLatest(ActionType.ACTION_SUBMIT_REEL_DIAMETER, submitReelDiameter);
+    yield takeLatest(ActionType.ACTION_SUBMIT_AUTO_PROGRAM, submitAutoProgram);
+    yield takeLatest(ActionType.ACTION_TOGGLE_AUTO_PROGRAM_REQUEST, toggleAutoProgram);
 }

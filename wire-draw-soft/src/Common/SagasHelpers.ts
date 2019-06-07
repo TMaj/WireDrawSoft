@@ -27,6 +27,31 @@ export async function sendCommand(connectionStatus: boolean) {
     });
     MyWebSocket.websocket.send(message);
 }
+
+export async function sendReelUpdate(diameter: number) {
+    const message = JSON.stringify({
+        diameter,
+        type: "reel"        
+    });
+    MyWebSocket.websocket.send(message);
+}
+
+export async function sendAutoProgram(steps: any[]) {
+    const message = JSON.stringify({
+        steps,
+        type: "autoProgram"        
+    });
+    MyWebSocket.websocket.send(message);
+}
+
+export async function switchAutoProgram(autoProgram: boolean) {
+    const message = JSON.stringify({
+        autoProgram,
+        type: "status"        
+    });
+    MyWebSocket.websocket.send(message);
+}
+
  
 export async function getAllPresets() {
     return await axios.get(`${apiUrl}/presets`);

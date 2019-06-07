@@ -4,14 +4,17 @@ import './NumberInputComponent.css'
 
 export interface INumberInputComponentProps {    
     value: number,
-    step: number,
+    step?: number,
     max?: number,
     min?: number,
-    onChange: (value: number) => void,
+    onChange?: (value: number) => void,
+    onBlur?:(value: number) => void,
     disabled?: boolean,
+    buttonsHidden?: boolean
 }
 
 export interface INumberInputComponentState {
+    step: number
     value: number;
     disabledPlus: boolean;
     disabledMinus: boolean;
@@ -21,14 +24,16 @@ export class NumberInputComponent extends React.Component<INumberInputComponentP
     constructor(props: INumberInputComponentProps) {
         super(props);
 
-        this.state = {
+        this.state = { 
             disabledMinus: false,
-            disabledPlus: false,
-            value: this.props.value,            
+            disabledPlus: false, 
+            step: this.props.step ? this.props.step : 0.1,         
+            value: this.props.value,  
         }
         this.onMinusClick = this.onMinusClick.bind(this);
         this.onPlusClick = this.onPlusClick.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.onBlur = this.onBlur.bind(this)
     } 
 
     public componentWillReceiveProps(nextProps: INumberInputComponentProps) {
@@ -40,16 +45,16 @@ export class NumberInputComponent extends React.Component<INumberInputComponentP
     public render() {
         return (
             <div className={'custom-number-input-container'}>
-                <CustomButtonComponent disabled={this.state.disabledMinus || this.props.disabled} type="button" content={'-'} onClick={this.onMinusClick}/> 
+                {this.props.buttonsHidden ? null : <CustomButtonComponent disabled={this.state.disabledMinus || this.props.disabled} type="button" content={'-'} onClick={this.onMinusClick}/> }
                 <input disabled={this.props.disabled} className="custom-number-input" type="number" step={this.props.step} value={this.state.value}
-                       onChange={this.onChange} max={this.props.max} min={this.props.min}/>
-                <CustomButtonComponent disabled={this.state.disabledPlus || this.props.disabled} type="button" content={'+'} onClick={this.onPlusClick}/> 
+                       onChange={this.onChange} max={this.props.max} min={this.props.min} onBlur={this.onBlur}/>
+                {this.props.buttonsHidden ? null :<CustomButtonComponent disabled={this.state.disabledPlus || this.props.disabled} type="button" content={'+'} onClick={this.onPlusClick}/> }
             </div>
         );
     }
 
     private onPlusClick() {        
-        this.setState({ value: this.round(this.state.value + this.props.step) }, () => {
+        this.setState({ value: this.round(this.state.value + this.state.step) }, () => {
             this.validateInput();
             if (this.props.onChange) {
                 this.props.onChange(this.state.value);
@@ -58,7 +63,7 @@ export class NumberInputComponent extends React.Component<INumberInputComponentP
     }
 
     private onMinusClick() {
-        this.setState({ value: this.round(this.state.value - this.props.step)}, () => {             
+        this.setState({ value: this.round(this.state.value - this.state.step)}, () => {             
             this.validateInput();
             if (this.props.onChange) {
                 this.props.onChange(this.state.value);
@@ -74,6 +79,12 @@ export class NumberInputComponent extends React.Component<INumberInputComponentP
                 this.props.onChange(this.state.value);
             }
         });
+    }
+
+    private onBlur(event: React.FormEvent<HTMLInputElement>) {
+        if (this.props.onBlur) {
+            this.props.onBlur(parseFloat(event.currentTarget.value));
+        }
     }
 
     private validateInput() {

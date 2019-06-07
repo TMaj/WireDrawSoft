@@ -12,11 +12,13 @@ const defaultSettings = (): ISettings => {
   }
 }
 
-const initialState = {
-    connectionsStatus: {
+const initialState = { 
+    
+    connectionsStatus: {  
+      autoProgram: false,
       connectedToEngines: false,
       connectedToHardwareController: false,
-      connectedToServer: false,
+      connectedToServer: false, 
     },
     currentState : {
       engine1Direction: 0,
@@ -24,13 +26,18 @@ const initialState = {
       engine2Direction: 0,
       engine2Speed: 0
     },
+    elongationStatus: {
+      leftLength: 0,
+      rightLength: 0,
+    },
     inputsState: {},
     presets: [] as IPreset[],    
     presetsLoading: false,  
     presetsState: {},
+    reelDiameter: 0.1,
     sessions: [] as ISession[],
     settings: defaultSettings(),
-    statistics: [] as IStatistics[],
+    statistics: [] as IStatistics[],  
 } as IState; 
 
 export const reducer = (state = initialState, action: IAction): IState => {
@@ -135,7 +142,29 @@ export const reducer = (state = initialState, action: IAction): IState => {
           settings: action.payload,          
         }
       } 
-        
+      case ActionType.ACTION_UPDATE_ELONGATION_STATUS: {
+        return { ...state,
+          elongationStatus: action.payload,          
+        }
+      }  
+      case ActionType.ACTION_UPDATE_REEL_DIAMETER : {
+        return { ...state,
+          reelDiameter: action.payload,          
+        }
+      }  
+      case ActionType.ACTION_UPDATE_AUTO_PROGRAM : {
+        return { ...state,
+          autoProgramSteps: action.payload,          
+        }
+      }  
+      case ActionType.ACTION_TOGGLE_AUTO_PROGRAM : {
+        return { ...state,
+          connectionsStatus: {
+            ...state.connectionsStatus,
+            autoProgram: action.payload
+          } 
+        }
+      } 
     default: {
       return state
     }

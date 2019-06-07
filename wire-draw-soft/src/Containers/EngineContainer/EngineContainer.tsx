@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { SubmitUpdate, UpdateDirectionInputValue, UpdateSpeedInputValue } from 'src/Common/Actions';
-import { EngineDirection, IConnectionsStatus, IProcessState, IState } from 'src/Common/Interfaces';
+import { EngineDirection, IConnectionsStatus, IElongationStatus, IProcessState, IState } from 'src/Common/Interfaces';
 import { CustomSubmitComponent } from 'src/Components/CustomSubmitComponent/CustomSubmitComponent';
 import { NumberInputComponent } from 'src/Components/NumberInputComponent/NumberInputComponent';
 import './EngineContainer.css' 
@@ -12,7 +12,8 @@ interface IEngineContainerOwnProps {
 
 interface IEngineContainerStoreProps {
     currentState: IProcessState;
-    connectionsStatus: IConnectionsStatus, 
+    connectionsStatus: IConnectionsStatus,
+    elongationStatus: IElongationStatus, 
 }
 
 interface IEngineContainerDispatchProps {
@@ -74,6 +75,7 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
         const currentDirection = this.props.currentState[`engine${this.props.engineNumber}Direction`];
         const enabled = this.props.connectionsStatus.connectedToEngines && this.props.connectionsStatus.connectedToServer;
         const containerClass = enabled ? 'engine-container' : 'engine-container disabled';
+        const wireWinded = (this.props.engineNumber === 1 && this.props.currentState.engine1Direction === 0) || (this.props.engineNumber === 2 && this.props.currentState.engine1Direction === 1);
         // tslint:disable-next-line:triple-equals
         const wheelAnimation = currentDirection == "1" ? 'engine-clockwise-wheel-spin' : 'engine-anticlockwise-wheel-spin'; 
         const wheelStyle = enabled && currentSpeed > 0 ? {animation: wheelAnimation + ' infinite '+ 60 / currentSpeed + 's linear'} : {animation: ''};
@@ -106,7 +108,10 @@ class EngineContainer extends React.Component<IEngineContainerProps, IEngineCont
                             </div>
                         </div>
                         <CustomSubmitComponent disabled={!enabled} value="Submit" />
-                    </form>                  
+                    </form>     
+                    <div className='engine-wire-amount-label'> Amount of wire  {wireWinded ? 'wound' : 'unwound'}:
+                        <span className='engine-wire-amount-label-value'> {(this.props.engineNumber === 1 ? this.props.elongationStatus.leftLength : this.props.elongationStatus.rightLength).toPrecision(4)} </span>  m 
+                    </div>              
                 </div>
             </div>
         );
@@ -138,6 +143,7 @@ const mapStateToProps = (state: IState) : IEngineContainerStoreProps => {
     return {
         connectionsStatus: state.connectionsStatus,
         currentState: state.currentState,
+        elongationStatus: state.elongationStatus,
     }
 }
 

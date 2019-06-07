@@ -12,13 +12,20 @@ export enum EngineDirection {
     Right = 1,
 }
 
-export interface IConnectionsStatus {
+export interface IElongationStatus {
+    leftLength: number;
+    rightLength: number;
+} 
+
+export interface IConnectionsStatus { 
+    autoProgram: boolean,
     connectedToServer: boolean;
     connectedToEngines: boolean;
     connectedToHardwareController: boolean;
 }
 
-export interface IHardwareState {
+export interface IHardwareState { 
+    autoProgram: boolean,
     connectedToEngines: boolean; 
     connectedToHardwareController: boolean;
 }
@@ -44,7 +51,10 @@ export interface IState {
     connectionsStatus: IConnectionsStatus;
     settings: ISettings;
     sessions: ISession[];
-    statistics: IStatistics[]
+    statistics: IStatistics[],
+    elongationStatus: IElongationStatus,
+    reelDiameter: number;
+    autoProgramSteps: any[]; 
 }
 
 export interface IPreset {

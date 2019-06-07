@@ -28,6 +28,14 @@
   font-size: 30px;
 }
 
+.engine-wire-amount-label {
+  font-size: 20px;
+}
+
+.engine-wire-amount-label-value {
+  font-weight: bold;
+}
+
 .engine-direction-label {
   font-size: 15px;
   color: gray;

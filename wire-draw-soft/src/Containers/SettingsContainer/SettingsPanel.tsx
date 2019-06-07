@@ -82,7 +82,8 @@ export class SettingsPanel extends React.Component<ISettingsPanelProps, ISetting
                 <div className='settings-authors-info'>    
                     <img src={'img/agh.png'} width={'200px'} /> <br/>
                     ⓒAGH 2019<br/>
-                    WIMiIP <br/>
+                    Wydział Inżynierii Metali i Informatyki Przemysłowej<br/>
+                    Katedra Informatyki Stosowanej i Modelowania<br/>
                     Dr inz Piotr Kustra <br/>
                     Prof. Dr hab. inz. Andrij Milenin <br/>
                     inz. Tomasz Maj <br/><br/>

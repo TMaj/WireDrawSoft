@@ -1,4 +1,4 @@
-import { IConnectionsStatus, IPreset, IProcessState, ISession, ISettings } from '../Common/Interfaces'; 
+import { IConnectionsStatus, IElongationStatus, IPreset, IProcessState, ISession, ISettings } from '../Common/Interfaces'; 
 
 import { ActionType } from "./Constans";
 
@@ -242,3 +242,77 @@ export const ChangeConnectionToHardware = (payload: boolean): IChangeConnectionT
         type: ActionType.ACTION_CHANGE_HARDWARE_CONNECTION, 
     }; 
 }
+
+export interface IUpdateElongationStatusAction {
+    type: string;
+    payload: IElongationStatus;
+}
+
+export const UpdateElongationStatus = (payload: IElongationStatus): IUpdateElongationStatusAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_UPDATE_ELONGATION_STATUS, 
+    }; 
+}
+
+export interface ISubmitReelDiameterUpdateAction {
+    type: string;
+    payload: number;
+}
+
+export const SubmitReelDiameterUpdate = (payload: number): ISubmitReelDiameterUpdateAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_SUBMIT_REEL_DIAMETER, 
+    }; 
+} 
+
+export interface IReelDiameterUpdateAction {
+    type: string;
+    payload: number;
+}
+
+export const UpdateReelDiameter = (payload: number): IReelDiameterUpdateAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_UPDATE_REEL_DIAMETER, 
+    }; 
+}
+
+export interface ISubmitAutoProgramAction {
+    type: string;
+    payload: any[];
+}  
+
+export const SubmitAutoProgram = (payload: any[]): ISubmitAutoProgramAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_SUBMIT_AUTO_PROGRAM, 
+    }; 
+}
+
+export const UpdateAutoProgram = (payload: any[]): ISubmitAutoProgramAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_UPDATE_AUTO_PROGRAM, 
+    }; 
+}
+
+export interface IToggleAutoProgramAction {
+    type: string;
+    payload: boolean;
+}
+
+export const ToggleAutoProgram = (payload: boolean): IToggleAutoProgramAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_TOGGLE_AUTO_PROGRAM_REQUEST, 
+    }; 
+}  
+
+export const UpdateAutoProgramState = (payload: boolean): IToggleAutoProgramAction => {
+    return {
+        payload,
+        type: ActionType.ACTION_TOGGLE_AUTO_PROGRAM, 
+    }; 
+}  
